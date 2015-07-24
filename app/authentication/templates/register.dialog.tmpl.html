@@ -1,0 +1,62 @@
+<md-dialog aria-label="Register">
+  <md-dialog-content>
+  
+    <md-content layout-padding>
+      <div class="title" style="text-align:center;">
+        <h1>Register</h1>
+      </div>
+      
+    
+      <form name="userForm">
+        <div layout layout-sm="column">
+          <md-input-container style="width:100%">
+              <label>NetID</label>
+              <input ng-model="user.username">
+            </md-input-container>
+        </div>
+        <div layout layout-sm="column">
+          <md-input-container flex>
+            <label>First name</label>
+            <input ng-model="user.first_name">
+          </md-input-container>
+          <md-input-container flex>
+            <label>Last Name</label>
+            <input ng-model="user.last_name">
+          </md-input-container>
+        </div>
+
+        <div layout layout-sm="column">
+           <md-input-container flex>
+            <label>Password</label>
+            <input type="password" ng-model="user.password">
+           </md-input-container>
+
+           <md-select placeholder="Program" flex
+                      ng-model="user.program" style="width:100%;">
+              <md-option value="00" style="width:100%;">MEng</md-option>
+              <md-option value="01" style="width:100%;">MBA</md-option>
+              <md-option value="02" style="width:100%;">CM</md-option>
+              <md-option value="03" style="width:100%;">HL</md-option>
+              <md-option value="04" style="width:100%;">Faculty</md-option>
+              <md-option value="05" style="width:100%;">PhD Student</md-option>
+              <md-option value="06" style="width:100%;">PostDoc</md-option>
+              <md-option value="07" style="width:100%;">Staff</md-option>
+            </md-select>
+        </div>
+          
+      </form>
+    </md-content>
+      
+      
+      
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="hide()">
+      Cancel
+    </md-button>
+    <md-button ng-click="register(user)">
+      Go
+    </md-button>
+  </div>
+</md-dialog>

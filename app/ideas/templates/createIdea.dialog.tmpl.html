@@ -1,0 +1,31 @@
+<md-dialog aria-label="Create Idea">
+  <md-dialog-content>
+  
+    <md-content layout-padding>
+      
+      <div class="title" style="text-align:center;">
+        <h1>Create a new Idea</h1>
+      </div>
+      
+      <form name="ideaForm">
+        <md-input-container flex>
+          <label>Idea</label>
+          <textarea ng-model="idea.idea" columns="1" md-maxlength="140"></textarea>
+        </md-input-container>
+      </form>
+      
+    </md-content>
+      
+      
+      
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="hide()">
+      Cancel
+    </md-button>
+    <md-button ng-click="submitIdea(idea)">
+      Create
+    </md-button>
+  </div>
+</md-dialog>

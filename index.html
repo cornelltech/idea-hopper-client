@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CT Ideas</title>
+
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+  <link rel="stylesheet" href="bower_components/ionicons/css/ionicons.css">
+  <link rel="stylesheet" href="styles/app.css">
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.js"></script>
+  <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+  <script src="bower_components/angular-material/angular-material.js"></script>
+  <script src="bower_components/ui-router/release/angular-ui-router.js"></script>
+  
+  <script src="app/accounts/services.accounts.js"></script>
+  <script src="app/authentication/controllers.authentication.js"></script>
+  <script src="app/authentication/services.authentication.js"></script>
+  <script src="app/components/controllers.toolbar.js"></script>
+  <script src="app/ideas/services.ideas.js"></script>
+
+  <script src="app/app.js"></script>
+
+</head>
+
+<body ng-app="idea-hopper"
+      ng-controller="AppController"
+      layout="column">
+  
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>
+        <span>CT Ideas</span>
+      </h2>
+      
+      <span flex></span>
+
+      <md-button ng-if="!authenticationRequired"
+                 aria-label="Account">
+        {{account.first_name}} {{account.last_name}}
+      </md-button>
+
+      <md-button ng-if="authenticationRequired"
+                 ng-click="registerDialog($event)"
+                 aria-label="Register">
+        Register
+      </md-button>
+
+      <md-button ng-if="authenticationRequired"
+                 ng-click="loginDialog($event)"
+                 aria-label="Login">
+        Login
+      </md-button>
+
+      <md-button ng-if="!authenticationRequired"
+                 ng-click="logout()"
+                 aria-label="Logout">
+          Logout
+      </md-button>
+      
+    </div>
+  </md-toolbar>
+
+
+  <md-content ng-if="!authenticationRequired"
+              layout="column" flex layout-padding>
+  
+    <md-list>
+      
+      <md-subheader class="md-no-sticky">
+        Class of 2016
+      </md-subheader>
+      <md-list-item ng-repeat="idea in ideas.content"
+                    layout="row">
+        <p>{{ idea.idea }}</p>
+
+        <md-button ng-click="upvoteIdea(idea)" class="md-raised" flex="5">
+          <md-icon class="icon" 
+                   md-font-icon="ion-arrow-up-c" 
+                   style="margin-top:5px;">
+          </md-icon>
+          {{idea.upvotes}}
+        </md-button>
+        <md-button ng-click="downvoteIdea(idea)" class="md-raised" flex="5">
+          <md-icon class="icon" 
+                   md-font-icon="ion-arrow-down-c" 
+                   style="margin-top:5px;">
+          {{idea.downvotes}}
+        </md-button>
+        
+      </md-list-item>
+    </md-list>
+
+
+
+    <md-fab-speed-dial  ng-click="createIdea($event)"
+                        style="position:absolute;
+                              bottom:25px;right:25px;">
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab">
+          <md-icon md-font-icon="ion-plus-round"
+                   style="font-size:200%; margin-bottom:7px;"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+    </md-fab-speed-dial>
+
+  </md-content>
+
+</body>
+
+</html>

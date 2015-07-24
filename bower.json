@@ -1,0 +1,21 @@
+{
+  "name": "tulip-merchant-portal",
+  "version": "0.0.0",
+  "authors": [
+    "AVatch <avatchinsky@outlook.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angularjs": "~1.4.3",
+    "ui-router": "~0.2.15",
+    "angular-local-storage": "~0.2.2",
+    "ionicons": "~2.0.1"
+  }
+}
