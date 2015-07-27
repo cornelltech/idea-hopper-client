@@ -42,12 +42,20 @@ angular.module('idea-hopper', ['ngMaterial',
 .controller('AppController', ['$scope', '$mdDialog', 'Authentication', 'Account', 'Idea',
   function($scope, $mdDialog, Authentication, Account, Idea){
 
+    /*
+     * Authentication Section
+     */
+
     // Authentication Verification
     $scope.isAuthenticated = Authentication.getToken() != undefined;
     $scope.$on('authenticated', function(){
-      console.log("Caught event - authenticated");
       $scope.isAuthenticated = true;
     });
+
+
+    /*
+     * Data sync section
+     */
 
     // Account Sync
     $scope.account = null;
@@ -63,7 +71,6 @@ angular.module('idea-hopper', ['ngMaterial',
         }, function(e){console.log(e);});
     };
 
-
     // Ideas Sync
     $scope.ideas = {count: 0, next: null, prev: null, content: []};
     var syncIdeas = function(){
@@ -78,6 +85,7 @@ angular.module('idea-hopper', ['ngMaterial',
         }, function(e){console.log(e);});
     };
 
+
     // Master Sync
     var sync = function(){
       syncAccount();
@@ -85,8 +93,10 @@ angular.module('idea-hopper', ['ngMaterial',
     }; sync();
 
     
-
-
+    /*
+     * Action Bindings
+     */
+    
     $scope.upvoteIdea = function(idea){
       Idea.upvote(idea.id)
         .then(function(s){
@@ -104,7 +114,9 @@ angular.module('idea-hopper', ['ngMaterial',
 
 
 
-
+    /*
+     * Dialog Configurations
+     */
 
     // Create Idea Dialog
     $scope.createIdea = function(ev) {

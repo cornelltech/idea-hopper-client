@@ -89,31 +89,43 @@
       <md-subheader class="md-no-sticky">
         Class of 2016
       </md-subheader>
-      <md-list-item ng-repeat="idea in ideas.results"
-                    layout="row">
-        <p>{{ idea.idea }}</p>
 
-        <md-button ng-click="upvoteIdea(idea)" class="md-raised" flex="5">
-          <md-icon class="icon" 
-                   md-font-icon="ion-arrow-up-c" 
-                   style="margin-top:5px;">
-          </md-icon>
-          {{idea.upvotes}}
-        </md-button>
-        <md-button ng-click="downvoteIdea(idea)" class="md-raised" flex="5">
-          <md-icon class="icon" 
-                   md-font-icon="ion-arrow-down-c" 
-                   style="margin-top:5px;">
-          {{idea.downvotes}}
-        </md-button>
-        
+      <md-list-item ng-repeat="idea in ideas.results">
+
+        <md-card flex>
+          <md-card-content>
+            <h2 class="md-title">Idea</h2>
+            <p>{{ idea.idea }}</p>
+          </md-card-content>
+          <div class="md-actions" layout="row" layout-align="end center">
+            <md-button ng-click="upvoteIdea(idea)" 
+                       class="md-icon-button" 
+                       flex="5">
+              <md-icon class="icon" 
+                       md-font-icon="ion-heart" 
+                       style="margin-top:5px; font-size:21px;">
+              </md-icon>
+              {{idea.upvotes}}
+            </md-button>
+            <md-button ng-click="downvoteIdea(idea)" 
+                       class="md-icon-button" 
+                       flex="5">
+              <md-icon class="icon" 
+                       md-font-icon="ion-chatboxes" 
+                       style="margin-top:5px; font-size:21px;">
+              </md-icon>
+              {{idea.downvotes}}
+            </md-button>
+          </div>
+        </md-card>
+
       </md-list-item>
     </md-list>
 
 
 
     <md-fab-speed-dial  ng-click="createIdea($event)"
-                        style="position:absolute;
+                        style="position:fixed;
                               bottom:25px;right:25px;">
       <md-fab-trigger>
         <md-button aria-label="menu" class="md-fab">
