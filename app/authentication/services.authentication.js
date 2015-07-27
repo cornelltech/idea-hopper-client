@@ -1,9 +1,9 @@
 angular.module('ideas.authentication.services', ['ngCookies'])
 
-.factory('Authentication', ['$http', '$cookies','DOMAIN', 'VERSION',
-  function($http, $cookies, DOMAIN, VERSION){
+.factory('Authentication', ['$rootScope', '$http', '$cookies','DOMAIN', 'VERSION',
+  function($rootScope, $http, $cookies, DOMAIN, VERSION){
 
-    var authenticateUser = function(credentials){
+    var authenticateCredentials = function(credentials){
       var response = $http({
         url: DOMAIN + '/api/' + VERSION + '/api-token-auth/',
         method: 'POST',
@@ -35,12 +35,24 @@ angular.module('ideas.authentication.services', ['ngCookies'])
       $cookies.remove('CTIHtoken');
     };
 
+    var isAuthenticated = function(){
+      var token = getToken();
+      console.log('before if');
+      if(token){
+        console.log("after if")
+        $rootScope.$broadcast('authenticated');
+        console.log("broadcasted")
+      }
+    };
+
     return{
-      authenticateUser: authenticateUser,
+      authenticateCredentials: authenticateCredentials,
       registerUser: registerUser,
 
       getToken: getToken,
       cacheToken: cacheToken,
-      logout: logout
+      logout: logout,
+      
+      isAuthenticated: isAuthenticated
     };
 }]);

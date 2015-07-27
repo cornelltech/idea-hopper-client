@@ -1,40 +1,38 @@
-<md-dialog aria-label="Login">
-  <md-dialog-content>
+<md-dialog ng-controller="LoginController"
+           aria-label="Login">
+  <md-dialog-content layout-padding>
   
-    <md-content layout-padding>
-      <div class="title" style="text-align:center;">
+    
+      <div class="title">
         <h1>Login</h1>
       </div>
       
-    
-      <form name="userForm">
+      <form>
         <div layout layout-sm="column">
           <md-input-container flex>
-              <label>NetID</label>
-              <input ng-model="user.username">
+              <label>NetID@cornell.edu</label>
+              <input ng-model="credentials.username">
             </md-input-container>
         </div>
 
         <div layout layout-sm="column">
            <md-input-container flex>
             <label>Password</label>
-            <input type="password" ng-model="user.password">
+            <input type="password" ng-model="credentials.password">
            </md-input-container>
         </div>
-          
       </form>
-    </md-content>
-      
-      
-      
+
   </md-dialog-content>
+  
   <div class="md-actions" layout="row">
     <span flex></span>
     <md-button ng-click="hide()">
       Cancel
     </md-button>
-    <md-button ng-click="login(user)">
+    <md-button ng-click="login(credentials)">
       Go
     </md-button>
   </div>
+
 </md-dialog>

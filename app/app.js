@@ -27,44 +27,64 @@ angular.module('idea-hopper', ['ngMaterial',
   $mdThemingProvider.theme('default')
 })
 
+.controller('CreateIdeaController', ['$scope', '$mdDialog', 'ideas', 
+  function($scope, $mdDialog, ideas){
+
+    $scope.hide = function() {
+      $mdDialog.hide();
+    };
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+  
+}])
+
 .controller('AppController', ['$scope', '$mdDialog', 'Authentication', 'Account', 'Idea',
   function($scope, $mdDialog, Authentication, Account, Idea){
-  
+
+    // Authentication Verification
+    $scope.isAuthenticated = Authentication.getToken() != undefined;
+    $scope.$on('authenticated', function(){
+      console.log("Caught event - authenticated");
+      $scope.isAuthenticated = true;
+    });
+
+    // Account Sync
+    $scope.account = null;
+    var syncAccount = function(){
+      Account.me()
+        .then(function(s){
+          if(s.status==200){
+            return s.data;
+          }
+        }, function(e){console.log(e);})
+        .then(function(account){
+          $scope.account = account;
+        }, function(e){console.log(e);});
+    };
+
+
+    // Ideas Sync
     $scope.ideas = {count: 0, next: null, prev: null, content: []};
+    var syncIdeas = function(){
+      Idea.getIdeas()
+        .then(function(s){
+          if(s.status==200){
+            return s.data;
+          }
+        }, function(e){console.log(e);})
+        .then(function(ideas){
+          $scope.ideas = ideas;
+        }, function(e){console.log(e);});
+    };
 
-
-
+    // Master Sync
     var sync = function(){
-      
-      Account.me().then(function(s){
-        $scope.account = s.data;
-      }, function(e){console.log(e);});
+      syncAccount();
+      syncIdeas();
+    }; sync();
 
-
-      Idea.getIdeas().then(function(s){
-        $scope.ideas.count = s.data.count;
-        $scope.ideas.next = s.data.next;
-        $scope.ideas.prev = s.data.prev;
-        $scope.ideas.content = s.data.results;
-      }, function(e){console.log(e);});
-
-    };
-
-
-
-
-
-
-
-
-
-    var token = Authentication.getToken();
-    if(token==null){
-      $scope.authenticationRequired = true;
-    }else{
-      sync();
-    };
-
+    
 
 
     $scope.upvoteIdea = function(idea){
@@ -86,50 +106,21 @@ angular.module('idea-hopper', ['ngMaterial',
 
 
 
-    // Create an idea
+    // Create Idea Dialog
     $scope.createIdea = function(ev) {
       $mdDialog.show({
-        controller: CreateIdeaController,
+        controller: DialogController,
         templateUrl: 'app/ideas/templates/createIdea.dialog.tmpl.html',
         parent: angular.element(document.body),
         targetEvent: ev,
-        locals: {ideas: $scope.ideas}
       }).then(function() {
         }, function() {
       });
     };
-    var CreateIdeaController = function($scope, $mdDialog, ideas){
-      $scope.submitIdea = function(idea){
-        idea.upvotes = 0;
-        idea.downvotes = 0;
-        idea.accounts = [];
-        idea.upvoters = [];
-        idea.downvoters = [];
-        Idea.createIdea(idea).then(function(s){
-          ideas.count += 1;
-          ideas.content.unshift(s.data);
-
-          $scope.hide();
-        }, function(e){console.log(e);});
-      };
-
-      $scope.hide = function() {
-        $mdDialog.hide();
-      };
-      $scope.cancel = function() {
-        $mdDialog.cancel();
-      };
-    };
-
-
-
-
-
-
-    // Registreation
+    // Registraion Dialog
     $scope.registerDialog = function(ev) {
       $mdDialog.show({
-        controller: RegisterController,
+        controller: DialogController,
         templateUrl: 'app/authentication/templates/register.dialog.tmpl.html',
         parent: angular.element(document.body),
         targetEvent: ev,
@@ -137,48 +128,10 @@ angular.module('idea-hopper', ['ngMaterial',
         }, function() {
       });
     };
-    var RegisterController = function($scope, $mdDialog){
-      var login = function(user){
-        Authentication.authenticateUser(user).then(function(s){
-          if(s.status == 200){
-            Authentication.cacheToken(s.data);
-            $scope.hide();            
-          }else if(s.status == 400){
-            console.log("Bad Credentials");
-            $scope.authError = true;
-          }else{
-            console.log("Unkown Error");
-          };
-        }, function(e){console.log(e);$scope.authError = true;});
-      };
-      var register = function(user){
-        Authentication.registerUser(user).then(function(s){
-          if(s.status==201){
-            var auth = {};
-            auth.username = user.username;
-            auth.password = user.password;
-            login(auth);
-          }
-        }, function(e){console.log(e);});
-      };
-      $scope.register = function(user){
-        console.log(user)
-        register(user);
-      };
-      $scope.hide = function() {
-        $mdDialog.hide();
-      };
-      $scope.cancel = function() {
-        $mdDialog.cancel();
-      };
-    };
-
-
-
-    // Login
+    // Login Dialog
     $scope.loginDialog = function(ev) {
       $mdDialog.show({
-        controller: LoginController,
+        controller: DialogController,
         templateUrl: 'app/authentication/templates/login.dialog.tmpl.html',
         parent: angular.element(document.body),
         targetEvent: ev,
@@ -186,24 +139,9 @@ angular.module('idea-hopper', ['ngMaterial',
         }, function() {
       });
     };
-    var LoginController = function($scope, $mdDialog){
-      var login = function(user){
-        Authentication.authenticateUser(user).then(function(s){
-          if(s.status == 200){
-            Authentication.cacheToken(s.data);
-            $scope.hide();            
-          }else if(s.status == 400){
-            console.log("Bad Credentials");
-            $scope.authError = true;
-          }else{
-            console.log("Unkown Error");
-          };
-        }, function(e){console.log(e);$scope.authError = true;});
-      };
-      $scope.login = function(user){
-        console.log(user)
-        login(user);
-      };
+
+    // Dialog Controller
+    var DialogController = function($scope, $mdDialog){
       $scope.hide = function() {
         $mdDialog.hide();
       };
@@ -211,5 +149,35 @@ angular.module('idea-hopper', ['ngMaterial',
         $mdDialog.cancel();
       };
     };
+}])
 
+
+.controller('LoginController', ['$rootScope', '$scope', '$mdDialog', 'Authentication',
+  function($rootScope, $scope, $mdDialog, Authentication){
+    
+    $scope.login = function(credentials){
+      Authentication.authenticateCredentials(credentials)
+        .then(function(s){
+          var token = null;
+          if(s.status == 200){
+            token = s.data;
+            return token;
+          }else{
+            // raise error
+          }
+        }, function(e){console.log(e);})
+
+        .then(function(token){          
+          Authentication.cacheToken(token);
+          $rootScope.$broadcast('authenticated');
+          $scope.hide();
+        }, function(e){console.log(e);});
+    };
+
+    $scope.hide = function() {
+        $mdDialog.hide();
+    };
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
 }])

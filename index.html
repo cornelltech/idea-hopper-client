@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="initial-scale=1" />
   <title>CT Ideas</title>
 
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
@@ -37,24 +38,24 @@
       
       <span flex></span>
 
-      <md-button ng-if="!authenticationRequired"
+      <md-button ng-if="isAuthenticated"
                  aria-label="Account">
         {{account.first_name}} {{account.last_name}}
       </md-button>
 
-      <md-button ng-if="authenticationRequired"
+      <md-button ng-if="!isAuthenticated"
                  ng-click="registerDialog($event)"
                  aria-label="Register">
         Register
       </md-button>
 
-      <md-button ng-if="authenticationRequired"
+      <md-button ng-if="!isAuthenticated"
                  ng-click="loginDialog($event)"
                  aria-label="Login">
         Login
       </md-button>
 
-      <md-button ng-if="!authenticationRequired"
+      <md-button ng-if="isAuthenticated"
                  ng-click="logout()"
                  aria-label="Logout">
           Logout
@@ -65,7 +66,7 @@
 
 
 
-  <md-content ng-if="authenticationRequired"
+  <md-content ng-if="!isAuthenticated"
               layout="column" 
               layout-align="center center"
               style="height:100%; background-color:#f5f5f5;">
@@ -80,7 +81,7 @@
   </md-content>
 
 
-  <md-content ng-if="!authenticationRequired"
+  <md-content ng-if="isAuthenticated"
               layout="column" flex layout-padding>
   
     <md-list>
@@ -88,7 +89,7 @@
       <md-subheader class="md-no-sticky">
         Class of 2016
       </md-subheader>
-      <md-list-item ng-repeat="idea in ideas.content"
+      <md-list-item ng-repeat="idea in ideas.results"
                     layout="row">
         <p>{{ idea.idea }}</p>
 
