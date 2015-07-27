@@ -51,6 +51,7 @@ angular.module('idea-hopper', ['ngMaterial',
     $scope.isAuthenticated = Authentication.getToken() != undefined;
     $scope.$on('authenticated', function(){
       $scope.isAuthenticated = true;
+      sync();
     });
 
 
