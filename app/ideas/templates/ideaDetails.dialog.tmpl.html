@@ -8,6 +8,14 @@
       </h2>
     
       <span flex></span>
+      <md-button 
+                 aria-label="Edit"
+                 class="md-icon-button">
+        <md-icon class="icon" 
+                 md-font-icon="ion-edit" 
+                 style="margin-top:5px; font-size:21px;">
+        </md-icon>
+      </md-button>
       <md-button ng-click="upvoteIdea(idea)" 
                  class="md-icon-button">
         <md-icon class="icon" 
@@ -40,14 +48,19 @@
     <form>
        <md-input-container flex>
         <label>Feedback</label>
-        <textarea ng-model="comment" columns="1" md-maxlength="500"></textarea>
+        <textarea ng-init="comment" 
+                  ng-model="comment.comment" 
+                  columns="1" md-maxlength="500"></textarea>
       </md-input-container>
       
       <div layout="row" layout-align="end center">
-        <md-button class="md-raised">Post</md-button>  
+        <md-button ng-click="postComment(comment)" 
+                   class="md-raised md-primary">Post</md-button>  
       </div>
     </form>
     
+    <p ng-repeat="comment in comments.results">{{comment.comment}}</p>
+
 
   </md-dialog-content>
 </md-dialog>

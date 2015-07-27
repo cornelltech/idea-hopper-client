@@ -12,6 +12,7 @@ angular.module('idea-hopper', ['ngMaterial',
                                'ideas.authentication.controllers',
                                'ideas.authentication.services',
                                'ideas.toolbar.controllers',
+                               'ideas.comments.services',
                                'ideas.ideas.services'])
 
 .constant('VERSION', 'v1')
@@ -67,7 +68,7 @@ angular.module('idea-hopper', ['ngMaterial',
           }
         }, function(e){console.log(e);})
         .then(function(account){
-          $scope.account = account;
+          $rootScope.account = account;
         }, function(e){console.log(e);});
     };
 
@@ -107,6 +108,11 @@ angular.module('idea-hopper', ['ngMaterial',
       Idea.upvote(idea.id)
         .then(function(s){
         }, function(e){console.log(e);});
+    };
+
+    $scope.logout = function(){
+      Authentication.logout();
+      $scope.isAuthenticated = false;
     };
 
 
@@ -171,11 +177,50 @@ angular.module('idea-hopper', ['ngMaterial',
 }])
 
 
-.controller('IdeaController', ['$rootScope', '$scope', '$mdDialog', 
-  function($rootScope, $scope, $mdDialog){
+.controller('IdeaController', ['$rootScope', '$scope', '$mdDialog', 'Comment',
+  function($rootScope, $scope, $mdDialog, Comment){
 
     $scope.idea = $rootScope.focusedIdea;
     $scope.idea.tags = ["art", "social", "jokes"]
+
+    // Sync Comments for Idea
+    $scope.comments = null;
+    var syncComments = function(){
+      Comment.getIdeaComments($scope.idea.id)
+        .then(function(s){
+          if(s.status==200){
+            return s.data;
+          }
+        }, function(e){console.log(s);})
+        .then(function(comments){
+          $scope.comments = comments;
+        }, function(e){console.log(e);});
+    };
+
+
+    var sync = function(){
+      syncComments();
+    }; sync();
+
+
+    $scope.postComment = function(comment){
+      comment.idea = $scope.idea.id;
+      comment.account = $rootScope.account.id;
+      Comment.postComment(comment)
+        .then(function(s){
+          if(s.status==201){
+            $scope.comment = {};
+            return s.data;
+          }
+        }, function(e){console.log(e);})
+
+        .then(function(comment){
+          $scope.comments.results.unshift(comment);
+          $scope.comments.count += 1;
+        }, function(e){console.log(e);});
+
+    };
+
 
     $scope.hide = function() {
         $mdDialog.hide();
