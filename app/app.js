@@ -6,6 +6,7 @@
 angular.module('idea-hopper', ['ngMaterial', 
                                'ui.router', 
                                'LocalStorageModule',
+                               'ngCookies',
 
                                'ideas.accounts.services',
                                'ideas.authentication.controllers',

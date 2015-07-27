@@ -1,11 +1,11 @@
-angular.module('ideas.authentication.services', [])
+angular.module('ideas.authentication.services', ['ngCookies'])
 
-.factory('Authentication', ['$http', 'localStorageService','DOMAIN',
-  function($http, localStorageService, DOMAIN){
+.factory('Authentication', ['$http', '$cookies','DOMAIN', 'VERSION',
+  function($http, $cookies, DOMAIN, VERSION){
 
     var authenticateUser = function(credentials){
       var response = $http({
-        url: DOMAIN + '/api/v1/api-token-auth/',
+        url: DOMAIN + '/api/' + VERSION + '/api-token-auth/',
         method: 'POST',
         contentType: "application/json; charset=UTF-8",
         data: credentials
@@ -15,7 +15,7 @@ angular.module('ideas.authentication.services', [])
 
     var registerUser = function(user){
       var response = $http({
-        url: DOMAIN + '/api/v1/accounts/create/',
+        url: DOMAIN + '/api/' + VERSION + '/accounts/create/',
         method: 'POST',
         contentType: "application/json; charset=UTF-8",
         data: user
@@ -24,15 +24,15 @@ angular.module('ideas.authentication.services', [])
     };
 
     var getToken = function(){
-      return localStorageService.get('token');
+      return $cookies.getObject('CTIHtoken');
     };
 
     var cacheToken = function(token){
-      return localStorageService.set('token', token);
+      return $cookies.putObject('CTIHtoken', token, secure=true);
     };
 
     var logout = function(){
-      localStorageService.remove('token');
+      $cookies.remove('CTIHtoken');
     };
 
     return{
