@@ -39,8 +39,8 @@ angular.module('idea-hopper', ['ngMaterial',
   
 }])
 
-.controller('AppController', ['$scope', '$mdDialog', 'Authentication', 'Account', 'Idea',
-  function($scope, $mdDialog, Authentication, Account, Idea){
+.controller('AppController', ['$rootScope', '$scope', '$mdDialog', 'Authentication', 'Account', 'Idea',
+  function($rootScope, $scope, $mdDialog, Authentication, Account, Idea){
 
     /*
      * Authentication Section
@@ -96,21 +96,18 @@ angular.module('idea-hopper', ['ngMaterial',
     /*
      * Action Bindings
      */
+
+    $rootScope.focusedIdea = false;
+    $scope.focusOnIdea = function(ev, idea){
+      $rootScope.focusedIdea = idea;
+      $scope.ideaDetails(ev);
+    };
     
     $scope.upvoteIdea = function(idea){
       Idea.upvote(idea.id)
         .then(function(s){
         }, function(e){console.log(e);});
     };
-
-    $scope.downvoteIdea = function(idea){
-      Idea.downvote(idea.id)
-        .then(function(s){
-        }, function(e){console.log(e);});
-    };
-
-
-
 
 
 
@@ -119,6 +116,16 @@ angular.module('idea-hopper', ['ngMaterial',
      */
 
     // Create Idea Dialog
+    $scope.ideaDetails = function(ev) {
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: 'app/ideas/templates/ideaDetails.dialog.tmpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+      }).then(function() {
+        }, function() {
+      });
+    };
     $scope.createIdea = function(ev) {
       $mdDialog.show({
         controller: DialogController,
@@ -160,6 +167,21 @@ angular.module('idea-hopper', ['ngMaterial',
       $scope.cancel = function() {
         $mdDialog.cancel();
       };
+    };
+}])
+
+
+.controller('IdeaController', ['$rootScope', '$scope', '$mdDialog', 
+  function($rootScope, $scope, $mdDialog){
+
+    $scope.idea = $rootScope.focusedIdea;
+    $scope.idea.tags = ["art", "social", "jokes"]
+
+    $scope.hide = function() {
+        $mdDialog.hide();
+    };
+    $scope.cancel = function() {
+      $mdDialog.cancel();
     };
 }])
 
