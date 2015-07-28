@@ -1,4 +1,5 @@
-<md-dialog aria-label="Register">
+<md-dialog ng-controller="RegisterController"
+           aria-label="Register">
   <md-dialog-content>
   
     <md-content layout-padding>
@@ -11,7 +12,7 @@
         <div layout layout-sm="column">
           <md-input-container style="width:100%">
               <label>NetID</label>
-              <input ng-model="user.username">
+              <input ng-model="user.email">
             </md-input-container>
         </div>
         <div layout layout-sm="column">
@@ -33,14 +34,8 @@
 
            <md-select placeholder="Program" flex
                       ng-model="user.program" style="width:100%;">
-              <md-option value="00" style="width:100%;">MEng</md-option>
-              <md-option value="01" style="width:100%;">MBA</md-option>
-              <md-option value="02" style="width:100%;">CM</md-option>
-              <md-option value="03" style="width:100%;">HL</md-option>
-              <md-option value="04" style="width:100%;">Faculty</md-option>
-              <md-option value="05" style="width:100%;">PhD Student</md-option>
-              <md-option value="06" style="width:100%;">PostDoc</md-option>
-              <md-option value="07" style="width:100%;">Staff</md-option>
+              <md-option ng-repeat="position in positions" 
+                         value="{{position.key}}" style="width:100%;">{{position.value}}</md-option>
             </md-select>
         </div>
           

@@ -70,6 +70,7 @@ angular.module('idea-hopper', ['ngMaterial',
         }, function(e){console.log(e);})
         .then(function(account){
           $rootScope.account = account;
+          $scope.account = account;
         }, function(e){console.log(e);});
     };
 
@@ -92,7 +93,7 @@ angular.module('idea-hopper', ['ngMaterial',
     var sync = function(){
       syncAccount();
       syncIdeas();
-    }; sync();
+    }; if($scope.isAuthenticated){ sync(); }
 
     
     /*
@@ -261,3 +262,53 @@ angular.module('idea-hopper', ['ngMaterial',
       $mdDialog.cancel();
     };
 }])
+
+.controller('RegisterController', ['$rootScope', '$scope', '$mdDialog', 'Authentication',
+  function($rootScope, $scope, $mdDialog, Authentication){
+    
+    $scope.positions = [{"key": "ME", "value": "MEng"},
+                        {"key": "MB", "value": "MBA"},
+                        {"key": "CM", "value": "Connective Media"},
+                        {"key": "HL", "value": "Healthy Life"},
+                        {"key": "FC", "value": "Faculty"},
+                        {"key": "PH", "value": "PhD Student"},
+                        {"key": "PD", "value": "PostDoc"},
+                        {"key": "DL", "value": "DevLab"},
+                        {"key": "ST", "value": "Staff"}]
+
+    $scope.register = function(user){
+      Authentication.registerUser(user)
+      .then(function(s){
+        if(s.status==201){ return s.data }
+      }, function(e){console.log(e);})
+
+      .then(function(s){
+        var credentials = {"password": user.password, "username": user.email };
+
+        Authentication.authenticateCredentials(credentials)
+        .then(function(s){
+          var token = null;
+          if(s.status == 200){
+            token = s.data;
+            return token;
+          }else{
+            // raise error
+          }
+        }, function(e){console.log(e);})
+
+        .then(function(token){          
+          Authentication.cacheToken(token);
+          $rootScope.$broadcast('authenticated');
+          $scope.hide();
+        }, function(e){console.log(e);});
+
+      }, function(e){console.log(s);})
+    };
+
+    $scope.hide = function() {
+        $mdDialog.hide();
+    };
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+}]);
