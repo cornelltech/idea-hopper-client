@@ -28,18 +28,6 @@ angular.module('idea-hopper', ['ngMaterial',
   $mdThemingProvider.theme('default')
 })
 
-.controller('CreateIdeaController', ['$scope', '$mdDialog', 'ideas', 
-  function($scope, $mdDialog, ideas){
-
-    $scope.hide = function() {
-      $mdDialog.hide();
-    };
-    $scope.cancel = function() {
-      $mdDialog.cancel();
-    };
-  
-}])
-
 .controller('AppController', ['$rootScope', '$scope', '$mdDialog', 'Authentication', 'Account', 'Idea',
   function($rootScope, $scope, $mdDialog, Authentication, Account, Idea){
 
@@ -75,7 +63,7 @@ angular.module('idea-hopper', ['ngMaterial',
     };
 
     // Ideas Sync
-    $scope.ideas = {count: 0, next: null, prev: null, content: []};
+    $scope.ideas = {count: 0, next: null, prev: null, results: []};
     var syncIdeas = function(){
       Idea.getIdeas()
         .then(function(s){
@@ -87,6 +75,11 @@ angular.module('idea-hopper', ['ngMaterial',
           $scope.ideas = ideas;
         }, function(e){console.log(e);});
     };
+
+    $scope.$on('ideaCreated', function(evt, idea){
+      $scope.ideas.count += 1;
+      $scope.ideas.results.unshift(idea);
+    });
 
 
     // Master Sync
@@ -169,10 +162,10 @@ angular.module('idea-hopper', ['ngMaterial',
 
     // Dialog Controller
     var DialogController = function($scope, $mdDialog){
-      $scope.hide = function() {
+      $scope.hide1 = function() {
         $mdDialog.hide();
       };
-      $scope.cancel = function() {
+      $scope.cancel1 = function() {
         $mdDialog.cancel();
       };
     };
@@ -230,6 +223,44 @@ angular.module('idea-hopper', ['ngMaterial',
     $scope.cancel = function() {
       $mdDialog.cancel();
     };
+}])
+
+
+.controller('CreateIdeaController', ['$rootScope', '$scope', '$mdDialog', 'Idea',
+  function($rootScope, $scope, $mdDialog, Idea){
+
+    $scope.tags = [];
+    $scope.readonly = false;
+
+    $scope.createIdea = function(idea){
+
+      idea.upvotes = 0;
+      idea.downvotes = 0;
+      idea.comment_count = 0;
+      idea.accounts = [];
+      idea.upvoters = [];
+      idea.downvoters = [];
+      
+      Idea.createIdea(idea)
+        .then(function(s){
+          if(s.status==201){ return s.data }
+        }, function(e){console.log(e);})
+
+        .then(function(idea){
+          console.log(idea);
+          $rootScope.$broadcast('ideaCreated', idea);
+          $scope.hide();
+        }, function(e){console.log(e);});
+
+    };
+
+    $scope.hide = function() {
+      $mdDialog.hide();
+    };
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+  
 }])
 
 
