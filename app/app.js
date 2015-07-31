@@ -101,16 +101,6 @@ angular.module('idea-hopper', ['ngMaterial',
         .then(function(ideas){
           $scope.ideas = ideas;
         }, function(e){console.log(e);});
- 
-      // Idea.getIdeas()
-      //   .then(function(s){
-      //     if(s.status==200){
-      //       return s.data;
-      //     }
-      //   }, function(e){console.log(e);})
-      //   .then(function(ideas){
-      //     $scope.ideas = ideas;
-      //   }, function(e){console.log(e);});
     };
 
     $scope.$on('ideaCreated', function(evt, idea){
@@ -213,8 +203,9 @@ angular.module('idea-hopper', ['ngMaterial',
 }])
 
 
-.controller('IdeaController', ['$rootScope', '$scope', '$mdDialog', 'Comment',
-  function($rootScope, $scope, $mdDialog, Comment){
+.controller('IdeaController', ['$rootScope', '$scope', '$mdDialog',
+  'Account', 'Comment',
+  function($rootScope, $scope, $mdDialog, Account, Comment){
 
     $scope.idea = $rootScope.focusedIdea;
     $scope.idea.tags = ["art", "social", "jokes"]
@@ -230,6 +221,18 @@ angular.module('idea-hopper', ['ngMaterial',
         }, function(e){console.log(s);})
         .then(function(comments){
           $scope.comments = comments;
+
+          $scope.comments.results.forEach(function(comment){
+            Account.getAccount(comment.account)
+              .then(function(s){
+                if(s.status==200){ return s.data; }
+              }, function(e){console.log(e);})
+              .then(function(account){
+                comment.accountProfile = account;
+              }, function(e){console.log(e);});
+          })
+
+          
         }, function(e){console.log(e);});
     };
 
@@ -251,6 +254,7 @@ angular.module('idea-hopper', ['ngMaterial',
         }, function(e){console.log(e);})
 
         .then(function(comment){
+          comment.accountProfile = $rootScope.account;
           $scope.comments.results.unshift(comment);
           $scope.comments.count += 1;
         }, function(e){console.log(e);});
