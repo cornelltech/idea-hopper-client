@@ -20,6 +20,7 @@
   <script src="app/authentication/controllers.authentication.js"></script>
   <script src="app/authentication/services.authentication.js"></script>
   <script src="app/comments/services.comments.js"></script>
+  <script src="app/blessings/services.blessings.js"></script>
   <script src="app/components/controllers.toolbar.js"></script>
   <script src="app/ideas/services.ideas.js"></script>
 
@@ -38,6 +39,15 @@
       </h2>
       
       <span flex></span>
+
+      <md-select ng-if="isAuthenticated"
+                 ng-model="focusedBlessing"
+                 aria-label="Blessing Selection">
+        <md-option ng-repeat="blessing in blessings.results" 
+                   selected="selected"
+                   ng-click="selectBlessing(blessing.id)"
+                   value="{{blessing.id}}">{{blessing.blessing}}</md-option>
+      </md-select>
 
       <md-button ng-if="isAuthenticated"
                  aria-label="Account">
@@ -106,7 +116,7 @@
 
         <md-card flex>
           
-          <md-card-content>
+          <md-card-content ng-click="focusOnIdea($event, idea)">
             <h2 class="md-title">Idea</h2>
             <p>{{ idea.idea }}</p>
           </md-card-content>
@@ -126,7 +136,7 @@
                        md-font-icon="ion-chatboxes" 
                        style="margin-top:5px; font-size:21px;">
               </md-icon>
-              {{idea.downvotes}}
+              {{idea.comment_count}}
             </md-button>
           </div>
         </md-card>

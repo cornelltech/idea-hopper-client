@@ -13,10 +13,12 @@ angular.module('idea-hopper', ['ngMaterial',
                                'ideas.authentication.services',
                                'ideas.toolbar.controllers',
                                'ideas.comments.services',
+                               'ideas.blessings.services',
                                'ideas.ideas.services'])
 
 .constant('VERSION', 'v1')
-.constant('DOMAIN', 'http://idea-hopper-api-dev.elasticbeanstalk.com')
+// .constant('DOMAIN', 'http://idea-hopper-api-dev.elasticbeanstalk.com')
+.constant('DOMAIN', 'http://localhost:8000')
 
 .config(['localStorageServiceProvider',
     function(localStorageServiceProvider) {
@@ -28,8 +30,9 @@ angular.module('idea-hopper', ['ngMaterial',
   $mdThemingProvider.theme('default')
 })
 
-.controller('AppController', ['$rootScope', '$scope', '$mdDialog', 'Authentication', 'Account', 'Idea',
-  function($rootScope, $scope, $mdDialog, Authentication, Account, Idea){
+.controller('AppController', ['$rootScope', '$scope', '$mdDialog', 'Authentication', 
+  'Blessing', 'Account', 'Idea',
+  function($rootScope, $scope, $mdDialog, Authentication, Blessing, Account, Idea){
 
     /*
      * Authentication Section
@@ -62,10 +65,34 @@ angular.module('idea-hopper', ['ngMaterial',
         }, function(e){console.log(e);});
     };
 
+    // Blessing Sync
+    $rootScope.focusedBlessing = -1;
+    $scope.blessings = {count: 0, next: null, prev: null, results: []};
+    var syncBlessings = function(){
+      Blessing.getBlessings()
+        .then(function(s){
+          if(s.status==200){
+            return s.data;
+          }
+        }, function(e){console.log(e);})
+        .then(function(blessings){
+          $scope.blessings = blessings;
+
+          // get the ideas for the first blessing
+          $rootScope.focusedBlessing = blessings.results[0].id;
+          syncIdeas($rootScope.focusedBlessing);
+
+        }, function(e){console.log(e);});
+    };
+    $scope.selectBlessing = function(id){
+      $rootScope.$broadcast('blessingSelected', id);
+    };
+
+
     // Ideas Sync
     $scope.ideas = {count: 0, next: null, prev: null, results: []};
-    var syncIdeas = function(){
-      Idea.getIdeas()
+    var syncIdeas = function(blessingID){
+      Blessing.getBlessingIdeas(blessingID)
         .then(function(s){
           if(s.status==200){
             return s.data;
@@ -74,6 +101,16 @@ angular.module('idea-hopper', ['ngMaterial',
         .then(function(ideas){
           $scope.ideas = ideas;
         }, function(e){console.log(e);});
+ 
+      // Idea.getIdeas()
+      //   .then(function(s){
+      //     if(s.status==200){
+      //       return s.data;
+      //     }
+      //   }, function(e){console.log(e);})
+      //   .then(function(ideas){
+      //     $scope.ideas = ideas;
+      //   }, function(e){console.log(e);});
     };
 
     $scope.$on('ideaCreated', function(evt, idea){
@@ -81,13 +118,16 @@ angular.module('idea-hopper', ['ngMaterial',
       $scope.ideas.results.unshift(idea);
     });
 
-
     // Master Sync
     var sync = function(){
       syncAccount();
-      syncIdeas();
+      syncBlessings();
     }; if($scope.isAuthenticated){ sync(); }
 
+    $scope.$on('blessingSelected', function(evt, blessingID){
+      $scope.focusedBlessing = blessingID;
+      syncIdeas(blessingID);
+    });
     
     /*
      * Action Bindings
@@ -102,6 +142,7 @@ angular.module('idea-hopper', ['ngMaterial',
     $scope.upvoteIdea = function(idea){
       Idea.upvote(idea.id)
         .then(function(s){
+          if(s.status==200){idea.upvotes += 1;}
         }, function(e){console.log(e);});
     };
 
@@ -237,10 +278,11 @@ angular.module('idea-hopper', ['ngMaterial',
       idea.upvotes = 0;
       idea.downvotes = 0;
       idea.comment_count = 0;
+      idea.blessings = [$rootScope.focusedBlessing];
       idea.accounts = [];
       idea.upvoters = [];
       idea.downvoters = [];
-      
+
       Idea.createIdea(idea)
         .then(function(s){
           if(s.status==201){ return s.data }
