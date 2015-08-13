@@ -21,9 +21,16 @@
     <md-button aria-label="{{me.first_name}} {{me.last_name}}" ng-click="testut()">
         {{me.first_name}} {{me.last_name}}
     </md-button>
+
+    <md-button class="md-icon-button" 
+               ng-click="logout()"
+               aria-label="logout">
+      <md-icon md-font-icon="ion-log-out"
+               style="font-size:23px;"></md-icon>
+    </md-button>
       
   </div>
 </md-toolbar>
 
 <!-- content goes here -->
-<ui-view></ui-view>
+<ui-view flex layout="column"></ui-view>

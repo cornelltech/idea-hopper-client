@@ -1,6 +1,12 @@
-<section layout="row" layout-padding style="height:90%;">
+<section flex layout="row" layout-padding>
   <!-- idea list -->
-  <div flex="40">
+  <md-content flex="40" style="height:89vh;">
+
+    <div layout="row"
+         layout-align="end center">
+      <md-button class="md-primary">+ Add an Idea</md-button>
+    </div>
+
     <md-list>
       <md-list-item ng-repeat="idea in blessingIdeas.results"
                     layout="row"
@@ -42,12 +48,11 @@
         </div>
 
       </md-list-item>
-
     </md-list>
-  </div>
+  </md-content>
 
   <!-- idea details -->
-  <div flex>
+  <md-content flex style="height:89vh;">
     <ui-view></ui-view>
-  </div>
+  </md-content>
 </section>
