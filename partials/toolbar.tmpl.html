@@ -1,0 +1,29 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" 
+               aria-label="Unicornutopia" 
+               ui-sref="application.ideas">
+      <md-icon md-svg-icon="actions:unicorn"></md-icon>
+    </md-button>
+    <h2>
+      <span>Unicornucopia</span>
+    </h2>
+      
+    <span flex></span>
+
+    <md-select ng-model="selectedBlessing"
+               aria-label="Blessing Selection">
+      <md-option ng-repeat="blessing in blessings.results" 
+                 ng-click="broadcaseBlessing(blessing.id)"
+                 value="{{blessing.id}}">{{blessing.blessing}}</md-option>
+    </md-select>
+
+    <md-button aria-label="{{me.first_name}} {{me.last_name}}" ng-click="testut()">
+        {{me.first_name}} {{me.last_name}}
+    </md-button>
+      
+  </div>
+</md-toolbar>
+
+<!-- content goes here -->
+<ui-view></ui-view>

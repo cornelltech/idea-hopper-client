@@ -1,4 +1,4 @@
-angular.module('ideas.ideas.services', [])
+angular.module('unicorn.ideas.services', [])
 
 .factory('Idea', ['$http', 'Authentication', 'DOMAIN',
   function($http, Authentication, DOMAIN){
@@ -10,7 +10,7 @@ angular.module('ideas.ideas.services', [])
                         method: 'POST',
                         headers: { 
                           'Content-Type': 'application/json',
-                          'Authorization': 'Token ' + token.token },
+                          'Authorization': 'Token ' + token },
                         data: idea
                       });
       return response;
@@ -23,7 +23,20 @@ angular.module('ideas.ideas.services', [])
                         method: 'GET',
                         headers: { 
                           'Content-Type': 'application/json',
-                          'Authorization': 'Token ' + token.token },
+                          'Authorization': 'Token ' + token },
+                        data: ''
+                      });
+      return response;
+    };
+
+    var getIdea = function(pk){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/v1/ideas/' + pk + '/',
+                        method: 'GET',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
                         data: ''
                       });
       return response;
@@ -36,7 +49,7 @@ angular.module('ideas.ideas.services', [])
                         method: 'POST',
                         headers: { 
                           'Content-Type': 'application/json',
-                          'Authorization': 'Token ' + token.token },
+                          'Authorization': 'Token ' + token },
                         data: ''
                       });
       return response;
@@ -49,7 +62,7 @@ angular.module('ideas.ideas.services', [])
                         method: 'POST',
                         headers: { 
                           'Content-Type': 'application/json',
-                          'Authorization': 'Token ' + token.token },
+                          'Authorization': 'Token ' + token },
                         data: ''
                       });
       return response;
@@ -58,6 +71,7 @@ angular.module('ideas.ideas.services', [])
     return{
       createIdea: createIdea,
       getIdeas: getIdeas,
+      getIdea: getIdea,
       upvote: upvote,
       downvote: downvote
     };

@@ -1,4 +1,4 @@
-angular.module('ideas.authentication.services', ['ngCookies'])
+angular.module('unicorn.authentication.services', ['ngCookies'])
 
 .factory('Authentication', ['$rootScope', '$http', '$cookies','DOMAIN', 'VERSION',
   function($rootScope, $http, $cookies, DOMAIN, VERSION){
@@ -35,24 +35,12 @@ angular.module('ideas.authentication.services', ['ngCookies'])
       $cookies.remove('CTIHtoken');
     };
 
-    var isAuthenticated = function(){
-      var token = getToken();
-      console.log('before if');
-      if(token){
-        console.log("after if")
-        $rootScope.$broadcast('authenticated');
-        console.log("broadcasted")
-      }
-    };
-
     return{
       authenticateCredentials: authenticateCredentials,
       registerUser: registerUser,
 
       getToken: getToken,
       cacheToken: cacheToken,
-      logout: logout,
-      
-      isAuthenticated: isAuthenticated
+      logout: logout
     };
 }]);

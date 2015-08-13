@@ -1,7 +1,7 @@
-angular.module('ideas.accounts.services', [])
+angular.module('unicorn.accounts.services', [])
 
-.factory('Account', ['$http', 'Authentication', 'localStorageService', 'DOMAIN',
-  function($http, Authentication, localStorageService, DOMAIN){
+.factory('Account', ['$http', 'Authentication', 'DOMAIN',
+  function($http, Authentication, DOMAIN){
     var me = function(){
       var token = Authentication.getToken();
       var response = $http({
@@ -9,7 +9,7 @@ angular.module('ideas.accounts.services', [])
                         method: 'GET',
                         headers: { 
                           'Content-Type': 'application/json',
-                          'Authorization': 'Token ' + token.token },
+                          'Authorization': 'Token ' + token },
                         data: ''
                       });
       return response;
@@ -22,23 +22,13 @@ angular.module('ideas.accounts.services', [])
                         method: 'GET',
                         headers: { 
                           'Content-Type': 'application/json',
-                          'Authorization': 'Token ' + token.token },
+                          'Authorization': 'Token ' + token },
                       });
       return response;
-    };
-    
-    var cacheMe = function(me){
-      return localStorageService.set('me', me);
-    };
-    
-    var getMe = function(){
-      return localStorageService.get('me');
     };
 
     return{
       me: me,
       getAccount: getAccount,
-      cacheMe: cacheMe,
-      getMe: getMe    
     };
 }]);

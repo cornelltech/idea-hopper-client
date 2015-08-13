@@ -1,9 +1,4 @@
-/**
-* ideas.comments.services Module
-*
-* Description
-*/
-angular.module('ideas.comments.services', [])
+angular.module('unicorn.comments.services', [])
 
 .factory('Comment', ['$http', 'Authentication', 'VERSION', 'DOMAIN',
   function($http, Authentication, VERSION, DOMAIN){
@@ -15,7 +10,7 @@ angular.module('ideas.comments.services', [])
                         method: 'GET',
                         headers: { 
                           'Content-Type': 'application/json',
-                          'Authorization': 'Token ' + token.token },
+                          'Authorization': 'Token ' + token },
                         data: ''
                       });
       return response;
@@ -28,7 +23,7 @@ angular.module('ideas.comments.services', [])
                         method: 'POST',
                         headers: { 
                           'Content-Type': 'application/json',
-                          'Authorization': 'Token ' + token.token },
+                          'Authorization': 'Token ' + token },
                         data: comment
                       });
       return response;

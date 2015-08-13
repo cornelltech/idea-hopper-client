@@ -18,10 +18,10 @@
       </md-button>
       <md-button ng-click="upvoteIdea(idea)" 
                  class="md-icon-button">
-        <md-icon class="icon" 
-                 md-font-icon="ion-heart" 
-                 style="margin-top:5px; font-size:21px;">
-        </md-icon>
+
+        <md-icon md-svg-icon="actions:unicorn" 
+                 style="color:white;" 
+                 aria-label="like"></md-icon>
         {{idea.upvotes}}
       </md-button>
       <md-button ng-click="hide()"

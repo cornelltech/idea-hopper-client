@@ -1,0 +1,95 @@
+<section flex
+         layout="column"
+         layout-align="center center"
+         style="background-color:#F44336;">
+
+    <dev class="intro-section animated bounceInUp"
+         style="color:white;
+                font-size:250%;">
+      <h1 style="margin-bottom:0px;">Unicornucopia</h1>
+      <small>by CT Dev Lab</small>  
+    </dev>
+    
+
+    <md-card class="animated bounceInUp" style="height:350px; width:300px;">
+        
+        <md-tabs>
+          <md-tab id="registerTab" style="min-height:100%;">
+            <md-tab-label>Register</md-tab-label>
+            <md-tab-body>
+              <md-content layout-padding>
+                <form name="registerForm">
+                  <div layout layout-sm="column">
+                    <md-input-container style="width:100%">
+                        <label>NetID</label>
+                        <input ng-model="user.email">
+                      </md-input-container>
+                  </div>
+                  <div layout layout-sm="column">
+                    <md-input-container flex>
+                      <label>First name</label>
+                      <input ng-model="user.first_name">
+                    </md-input-container>
+                    <md-input-container flex>
+                      <label>Last Name</label>
+                      <input ng-model="user.last_name">
+                    </md-input-container>
+                  </div>
+                  <div layout layout-sm="column">
+                     <md-input-container flex>
+                      <label>Password</label>
+                      <input type="password" ng-model="user.password">
+                     </md-input-container>
+                     <md-select placeholder="Program" 
+                                flex
+                                ng-model="user.program" 
+                                style="width:100%;">
+                        <md-option ng-repeat="position in positions" 
+                                   value="{{position.key}}" 
+                                   style="width:100%;">
+                            {{position.value}}
+                        </md-option>
+                      </md-select>
+                  </div>
+                </form>
+                <div layout="row"
+                     layout-align="end">
+                  <md-button ng-click="authenticate(user, 'register')"
+                             class="md-raised md-primary">
+                    Go
+                  </md-button>  
+                </div>
+              </md-content>
+            </md-tab-body>
+          </md-tab>
+          <md-tab id="signupTab" style="min-height:100%;">
+            <md-tab-label>Signup</md-tab-label>
+            <md-tab-body>
+              <md-content layout-padding>
+                <form name="signupForm">
+                  <div layout layout-sm="column">
+                    <md-input-container style="width:100%">
+                        <label>NetID</label>
+                        <input ng-model="user.email">
+                      </md-input-container>
+                  </div>
+                  <div layout layout-sm="column">
+                    <md-input-container style="width:100%">
+                        <label>password</label>
+                        <input type="password" ng-model="user.password">
+                      </md-input-container>
+                  </div>
+                </form>
+                <div layout="row"
+                     layout-align="end">
+                  <md-button ng-click="authenticate(user, 'signin')"
+                             class="md-raised md-primary">
+                    Go
+                  </md-button>  
+                </div>
+              </md-content>
+            </md-tab-body>
+          </md-tab>
+        </md-tabs>
+    </md-card>
+</section>

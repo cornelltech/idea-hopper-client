@@ -1,9 +1,4 @@
-/**
-* ideas.blessings.services Module
-*
-* Description
-*/
-angular.module('ideas.blessings.services', [])
+angular.module('unicorn.blessings.services', [])
 
 .factory('Blessing', ['$http', 'Authentication', 'VERSION', 'DOMAIN',
   function($http, Authentication, VERSION, DOMAIN){
@@ -15,7 +10,7 @@ angular.module('ideas.blessings.services', [])
                         method: 'GET',
                         headers: { 
                           'Content-Type': 'application/json',
-                          'Authorization': 'Token ' + token.token },
+                          'Authorization': 'Token ' + token },
                       });
       return response;
     };
@@ -27,7 +22,7 @@ angular.module('ideas.blessings.services', [])
                         method: 'GET',
                         headers: { 
                           'Content-Type': 'application/json',
-                          'Authorization': 'Token ' + token.token },
+                          'Authorization': 'Token ' + token },
                       });
       return response;
     };

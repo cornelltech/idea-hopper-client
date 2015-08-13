@@ -1,0 +1,53 @@
+<section layout="row" layout-padding style="height:90%;">
+  <!-- idea list -->
+  <div flex="40">
+    <md-list>
+      <md-list-item ng-repeat="idea in blessingIdeas.results"
+                    layout="row"
+                    style="border-bottom:1px solid rgba(0,0,0,0.12); padding: 10px;">
+        <div class="idea-info"
+             flex="75" 
+             ui-sref="application.ideas.idea({ pk: idea.id })"
+             style="cursor: pointer;">
+          <div class="md-list-item-text">
+            <h3 style="color: rgba(0,0,0,0.54);
+                       margin:0px;
+                       font-size: 16px;
+                       font-weight: 400;
+                       letter-spacing: 0.01em;">
+              {{ idea.accounts[0].first_name }} {{ idea.accounts[0].last_name }}
+            </h3>
+            <p style="margin:0px;">{{ idea.idea }}</p>
+          </div>
+        </div>
+        <div class="idea-actions" 
+             layout="row"
+             layout-align="end"
+             flex>
+          <md-button ng-click="upvoteIdea(idea)" 
+                     class="md-icon-button">
+            <md-icon class="icon" 
+                     md-svg-icon="actions:unicorn">
+            </md-icon>
+            {{idea.upvotes}}
+          </md-button>
+          <md-button ng-click="focusOnIdea($event, idea)" 
+                     class="md-icon-button">
+            <md-icon class="icon" 
+                     md-font-icon="ion-chatboxes" 
+                     style="margin-top:5px; font-size:21px;">
+            </md-icon>
+            {{idea.comment_count}}
+          </md-button>
+        </div>
+
+      </md-list-item>
+
+    </md-list>
+  </div>
+
+  <!-- idea details -->
+  <div flex>
+    <ui-view></ui-view>
+  </div>
+</section>
