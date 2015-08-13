@@ -45,15 +45,16 @@ angular.module('unicorn.ideas.controllers', [])
       blessingID = id;
     });
 
-
-    $scope.createIdea = function(idea){
+    $scope.idea = "";
+    $scope.createIdea = function(){
+      console.log($scope.idea);
 
       var idea = {
-                    "idea": idea.idea,
+                    "idea": $scope.idea,
                     "upvotes": 0,
                     "downvotes": 0,
                     "comment_count": 0,
-                    "accounts": [],
+                    "accounts": [$rootScope.me.id],
                     "blessings": [blessingID],
                     "upvoters": [],
                     "downvoters": []

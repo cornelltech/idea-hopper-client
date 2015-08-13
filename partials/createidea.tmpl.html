@@ -11,14 +11,14 @@
       <h3 style="color: rgba(0,0,0,0.54);">Idea:</h3>
       <md-input-container flex>
         <label>Idea</label>
-        <textarea ng-model="idea.idea" columns="1" md-maxlength="140"></textarea>
+        <textarea ng-model="idea" columns="1" md-maxlength="140"></textarea>
       </md-input-container>
       
       <div class="actions"
            layout="row"
            layout-align="end center">
         <md-button class="md-raised"
-                 ng-click="createIdea(idea)">Create</md-button>
+                 ng-click="createIdea()">Create</md-button>
       </div>
     </md-card-content>
   </md-card>
