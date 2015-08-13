@@ -7,6 +7,7 @@ angular.module('CTunicornucopia', ['ngMaterial',
                                    'ui.router', 
                                    'ngCookies',
 
+                                   'unicorn.accounts.directives',
                                    'unicorn.accounts.services',
                                    'unicorn.accounts.controllers',
                                    'unicorn.authentication.controllers',
@@ -61,6 +62,12 @@ angular.module('CTunicornucopia', ['ngMaterial',
         url: '/ideas',  
         templateUrl: 'partials/ideas.tmpl.html',
         controller: 'IdeasController'
+      })
+
+      .state('application.ideas.create', {
+        url: '/ideas/create',  
+        templateUrl: 'partials/createidea.tmpl.html',
+        controller: 'CreateIdeaController'
       })
 
       .state('application.ideas.idea', {

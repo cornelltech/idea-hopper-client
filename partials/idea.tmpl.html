@@ -39,10 +39,19 @@
       
       <md-list>
          <md-list-item ng-repeat="comment in comments.results"
-                       class="md-3-line">
-            <img ng-src="http://placehold.it/150x150" class="md-avatar" alt="{{comment.accountProfile.first_name}}" />
-            <div class="md-list-item-text">
-              <h3>{{comment.account.first_name}} {{comment.account.last_name}}</h3>
+                       class="md-3-line"
+                       layout="row">
+            <!-- <img ng-src="http://placehold.it/150x150" class="md-avatar" alt="{{comment.accountProfile.first_name}}" /> -->
+            
+            <avatar flex="5" 
+                    account="comment.account"
+                    style="padding-top:16px;"
+                    layout="column"
+                    layout-align="center center"></avatar>
+
+            <div flex class="md-list-item-text">
+              <h3>
+              {{comment.account.first_name}} {{comment.account.last_name}}</h3>
               <p>{{comment.comment}}</p>
 
               <small style="position:absolute; bottom:0px; right:0px; color: rgba(0,0,0,0.54);">{{comment.time_created}}</small>

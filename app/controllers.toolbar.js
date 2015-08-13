@@ -39,6 +39,7 @@ angular.module('unicorn.toolbar.controllers', [])
 
     $scope.broadcaseBlessing = function(id){
       $scope.selectedBlessing = id;
+      $rootScope.selectedBlessingID = id;
       $rootScope.$broadcast('blessingSelection', id);
     };
     

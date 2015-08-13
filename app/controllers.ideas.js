@@ -4,6 +4,7 @@ angular.module('unicorn.ideas.controllers', [])
   function($rootScope, $scope, Blessing, Idea){
   
     $scope.blessingIdeas = {};
+    var selectedBlessing = -1;
     var syncBlessingIdeas = function(id){
       Blessing.getBlessingIdeas(id)
         .then(function(s){
@@ -17,8 +18,13 @@ angular.module('unicorn.ideas.controllers', [])
     };
 
     $scope.$on('blessingSelection', function(evt, id){
+      selectedBlessing = id;
       syncBlessingIdeas(id);
     });
+
+    $scope.$on('ideaCreated', function(evt, idea){
+      syncBlessingIdeas(selectedBlessing);
+    })
 
 
     $scope.upvoteIdea = function(idea){
@@ -29,6 +35,48 @@ angular.module('unicorn.ideas.controllers', [])
     };
 
 }])
+
+
+.controller('CreateIdeaController', ['$scope', '$rootScope', '$state', 'Idea',
+  function($scope, $rootScope, $state, Idea){
+  
+    var blessingID = $rootScope.selectedBlessingID;
+    $scope.$on('blessingSelection', function(evt, id){
+      blessingID = id;
+    });
+
+
+    $scope.createIdea = function(idea){
+
+      var idea = {
+                    "idea": idea.idea,
+                    "upvotes": 0,
+                    "downvotes": 0,
+                    "comment_count": 0,
+                    "accounts": [],
+                    "blessings": [blessingID],
+                    "upvoters": [],
+                    "downvoters": []
+                };
+    
+      Idea.createIdea(idea)
+        .then(function(s){
+          if(s.status==201){ return s.data; }
+          else{ throw "Error creating idea"; }
+        }, function(e){console.log(e);})
+
+        .then(function(idea){
+          broadcaseIdeaCreation(idea);
+          $state.go('application.ideas.idea', {'pk': idea.id});
+        }, function(e){console.log(e);});
+    };
+
+    var broadcaseIdeaCreation = function(idea){
+      $rootScope.$broadcast('ideaCreated', idea);
+    };
+
+}])
+
 
 .controller('IdeaController', ['$rootScope', '$scope', '$state', 'Idea',
   'Comment', 'Gif',
