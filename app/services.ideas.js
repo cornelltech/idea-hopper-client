@@ -42,6 +42,19 @@ angular.module('unicorn.ideas.services', [])
       return response;
     };
 
+    var updateIdea = function(idea){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/v1/ideas/' + idea.id + '/',
+                        method: 'PUT',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
+                        data: idea
+                      });
+      return response;
+    };
+
     var upvote = function(pk){
       var token = Authentication.getToken();
       var response = $http({
@@ -70,6 +83,7 @@ angular.module('unicorn.ideas.services', [])
 
     return{
       createIdea: createIdea,
+      updateIdea: updateIdea,
       getIdeas: getIdeas,
       getIdea: getIdea,
       upvote: upvote,

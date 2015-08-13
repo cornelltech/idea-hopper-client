@@ -84,6 +84,8 @@ angular.module('unicorn.ideas.controllers', [])
   
     var pk = $state.params.pk;
 
+    $scope.authored = false;
+
     $scope.idea = {};
     var syncIdea = function(){
       Idea.getIdea(pk)
@@ -93,7 +95,11 @@ angular.module('unicorn.ideas.controllers', [])
         }, function(e){ console.log(e); })
 
         .then(function(idea){
+          if($rootScope.me.id == idea.accounts[0]){
+            $scope.authored = true;
+          }
           $scope.idea = idea;
+
         }, function(e){ console.log(e); })
     }; syncIdea();
 
@@ -134,6 +140,24 @@ angular.module('unicorn.ideas.controllers', [])
         .then(function(s){
           if(s.status==200){idea.upvotes += 1;}
         }, function(e){console.log(e);});
+    };
+
+
+    $scope.editing = false;
+    $scope.toggleEditMode = function(){
+      $scope.editing = !$scope.editing;
+    };
+
+    $scope.saveEdit = function(){
+      Idea.updateIdea($scope.idea)
+        .then(function(s){console.log(s)}, function(e){console.log(e);});
+      $scope.toggleEditMode();
+    };
+
+
+    $scope.convertTime = function(t){
+      var t = new Date(t);
+      return t.toDateString();
     };
 
 

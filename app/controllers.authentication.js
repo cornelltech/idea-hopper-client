@@ -58,5 +58,6 @@ angular.module('unicorn.authentication.controllers', [])
 
         }, function(e){console.log(e);});
     };
+
     
 }]);

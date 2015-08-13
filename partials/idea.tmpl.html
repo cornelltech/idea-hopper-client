@@ -4,20 +4,49 @@
       <div class="md-toolbar-tools">
         <span flex></span>
 
-        <md-button ng-click="upvoteIdea(idea)" 
-                     class="md-icon-button">
+        <md-button   ng-click="upvoteIdea(idea)" 
+                     class="md-icon-button"
+                     aria-label="upvote">
             <md-icon class="icon" 
                      md-svg-icon="actions:unicorn">
             </md-icon>
             {{idea.upvotes}}
-          </md-button>
+        </md-button>
+
+        <md-button   ng-if="authored && !editing"
+                     aria-label="edit"
+                     ng-click="toggleEditMode()" 
+                     class="md-icon-button">
+            <md-icon class="icon" 
+                     md-font-icon="ion-edit"
+                     style="font-size:17px; padding-top:5px;">
+            </md-icon>
+        </md-button>
+
+        <md-button   ng-if="editing"
+                     aria-label="save"
+                     ng-click="saveEdit()" 
+                     class="md-icon-button">
+            <md-icon class="icon" 
+                     md-font-icon="ion-android-cloud-done"
+                     style="font-size:17px; padding-top:5px;">
+            </md-icon>
+        </md-button>
+          
           
       </div>
     </md-toolbar>
     
     <md-card-content>
-      <h3 style="color: rgba(0,0,0,0.54);">Idea:</h3>
-      <p style="padding:15px; padding-top:0px;">{{idea.idea}}</p>
+      <div ng-if="!editing">
+        <h3 style="color: rgba(0,0,0,0.54);">Idea:</h3>
+        <p style="padding:15px; padding-top:0px;">{{idea.idea}}</p>
+      </div>
+
+      <md-input-container flex ng-if="editing">
+        <label>Idea</label>
+        <textarea ng-model="idea.idea" columns="1" md-maxlength="140"></textarea>
+      </md-input-container>
       
       <md-divider></md-divider>
 
@@ -41,11 +70,10 @@
          <md-list-item ng-repeat="comment in comments.results"
                        class="md-3-line"
                        layout="row">
-            <!-- <img ng-src="http://placehold.it/150x150" class="md-avatar" alt="{{comment.accountProfile.first_name}}" /> -->
             
             <avatar flex="5" 
                     account="comment.account"
-                    style="padding-top:16px;"
+                    style="padding-top:16px; margin-right:10px;"
                     layout="column"
                     layout-align="center center"></avatar>
 
@@ -54,7 +82,7 @@
               {{comment.account.first_name}} {{comment.account.last_name}}</h3>
               <p>{{comment.comment}}</p>
 
-              <small style="position:absolute; bottom:0px; right:0px; color: rgba(0,0,0,0.54);">{{comment.time_created}}</small>
+              <small style="position:absolute; bottom:0px; right:0px; color: rgba(0,0,0,0.54);">{{convertTime(comment.time_created)}}</small>
             </div>
           </md-list-item>
       </md-list>
