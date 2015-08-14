@@ -9,6 +9,10 @@
     </div>
 
     <md-list>
+      <md-list-item ng-if="blessingIdeas.results.length==0">
+        <p>There are no ideas yet :'(</p>
+      </md-list-item>
+
       <md-list-item ng-repeat="idea in blessingIdeas.results"
                     layout="row"
                     style="border-bottom:1px solid rgba(0,0,0,0.12); padding: 10px;">
