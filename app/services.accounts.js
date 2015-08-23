@@ -39,9 +39,22 @@ angular.module('unicorn.accounts.services', [])
       return response;
     };
 
+    var getAccountUnicornedIdeas = function(pk){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/v1/accounts/' + pk + '/upvotes/',
+                        method: 'GET',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
+                      });
+      return response;
+    };
+
     return{
       me: me,
       getAccount: getAccount,
-      getAccountIdeas: getAccountIdeas
+      getAccountIdeas: getAccountIdeas,
+      getAccountUnicornedIdeas: getAccountUnicornedIdeas
     };
 }]);

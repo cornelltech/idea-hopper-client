@@ -48,7 +48,7 @@
         <textarea ng-model="idea.idea" columns="1" md-maxlength="140"></textarea>
       </md-input-container>
       
-      <md-divider></md-divider>
+      <md-divider ng-if="!editing"></md-divider>
 
       <form>
         <md-input-container flex>
@@ -73,13 +73,18 @@
             
             <avatar flex="5" 
                     account="comment.account"
-                    style="padding-top:16px; margin-right:10px;"
+                    style="padding-top:16px; margin-right:10px; cursor: pointer;"
                     layout="column"
-                    layout-align="center center"></avatar>
+                    layout-align="center center"
+                    ui-sref="application.account({ pk: comment.account.id })"
+                    ui-sref-opts="{reload: true}"></avatar>
 
             <div flex class="md-list-item-text">
-              <h3>
-              {{comment.account.first_name}} {{comment.account.last_name}}</h3>
+              <h3 ui-sref="application.account({ pk: comment.account.id })"
+                  ui-sref-opts="{reload: true}"
+                  style="cursor: pointer;">
+                {{comment.account.first_name}} {{comment.account.last_name}}
+              </h3>
               <p>{{comment.comment}}</p>
 
               <small style="position:absolute; bottom:0px; right:0px; color: rgba(0,0,0,0.54);">{{convertTime(comment.time_created)}}</small>
