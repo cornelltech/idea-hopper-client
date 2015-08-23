@@ -1,6 +1,6 @@
-<section flex layout="row" layout-padding>
+<section flex layout-sm="column" layout="row" layout-padding>
   <!-- idea list -->
-  <md-content flex="40" style="height:89vh;">
+  <md-content flex="40" flex-sm="100" flex-order="1" flex-order-sm="2" style="height:89vh;">
 
     <div layout="row"
          layout-align="end center">
@@ -57,7 +57,7 @@
   </md-content>
 
   <!-- idea details -->
-  <md-content flex style="height:89vh;">
+  <md-content flex flex-order="2" flex-order-sm="1" style="height:89vh;">
     <ui-view></ui-view>
   </md-content>
 </section>
