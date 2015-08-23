@@ -59,6 +59,12 @@ angular.module('CTunicornucopia', ['ngMaterial',
         controller: 'ToolbarController'
       })
 
+      .state('application.account', {
+        url: '/account/:pk',  
+        templateUrl: 'partials/account.tmpl.html',
+        controller: 'AccountController'
+      })
+
       .state('application.ideas', {
         url: '/ideas',  
         templateUrl: 'partials/ideas.tmpl.html',

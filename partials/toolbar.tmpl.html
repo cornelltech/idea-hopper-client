@@ -2,7 +2,8 @@
   <div class="md-toolbar-tools">
     <md-button class="md-icon-button" 
                aria-label="Unicornutopia" 
-               ui-sref="application.ideas">
+               ui-sref="application.ideas"
+               ui-sref-opts="{reload: true}">
       <md-icon md-svg-icon="actions:unicorn"></md-icon>
     </md-button>
     <h2>
@@ -18,7 +19,9 @@
                  value="{{blessing.id}}">{{blessing.blessing}}</md-option>
     </md-select>
 
-    <md-button aria-label="{{me.first_name}} {{me.last_name}}" ng-click="testut()">
+    <md-button aria-label="{{me.first_name}} {{me.last_name}}"
+               ui-sref="application.account({ pk: me.id })"
+               ui-sref-opts="{reload: true}">
         {{me.first_name}} {{me.last_name}}
     </md-button>
 
