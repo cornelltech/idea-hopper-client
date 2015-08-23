@@ -3,6 +3,11 @@ angular.module('unicorn.ideas.controllers', [])
 .controller('IdeasController', ['$rootScope', '$scope', 'Blessing', 'Idea',
   function($rootScope, $scope, Blessing, Idea){
   
+    $scope.searchFlag = false;
+    $scope.toggleSearch = function(){
+      $scope.searchFlag = !$scope.searchFlag;
+    };
+    
     $scope.orderingVar = '';
     $scope.orderingVarReverseFlag = false;
     $scope.toggleOrdering = function(param){

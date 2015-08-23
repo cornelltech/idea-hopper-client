@@ -6,7 +6,8 @@
          layout-align="center center">
 
       <md-button class="md-secondary md-icon-button"
-                 aria-label="search">
+                 aria-label="search"
+                 ng-click="toggleSearch()">
         <md-icon class="icon" 
                  md-font-icon="ion-search"
                  style="margin-top:5px; font-size:21px;">
@@ -49,12 +50,21 @@
                  ui-sref="application.ideas.create">+ Add an Idea</md-button>
     </div>
 
+    <div ng-show="searchFlag" layout="row">
+      <div flex layout layout-sm="column">
+        <md-input-container style="width:100%">
+            <label>Search for ideas</label>
+            <input ng-model="search">
+          </md-input-container>
+      </div>
+    </div>
+
     <md-list>
       <md-list-item ng-if="blessingIdeas.results.length==0">
         <p>There are no ideas yet :'(</p>
       </md-list-item>
 
-      <md-list-item ng-repeat="idea in blessingIdeas.results | orderBy: orderingVar : orderingVarReverseFlag"
+      <md-list-item ng-repeat="idea in blessingIdeas.results | filter: search | orderBy: orderingVar: orderingVarReverseFlag"
                     layout="row"
                     style="border-bottom:1px solid rgba(0,0,0,0.12); padding: 10px;">
         <div class="idea-info"
