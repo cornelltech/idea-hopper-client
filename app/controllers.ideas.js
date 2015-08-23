@@ -3,6 +3,15 @@ angular.module('unicorn.ideas.controllers', [])
 .controller('IdeasController', ['$rootScope', '$scope', 'Blessing', 'Idea',
   function($rootScope, $scope, Blessing, Idea){
   
+    $scope.orderingVar = '';
+    $scope.orderingVarReverseFlag = false;
+    $scope.toggleOrdering = function(param){
+      if(param == $scope.orderingVar){
+        $scope.orderingVarReverseFlag = !$scope.orderingVarReverseFlag;
+      }
+      $scope.orderingVar = param;
+    };
+
     $scope.blessingIdeas = {};
     var selectedBlessing = -1;
     var syncBlessingIdeas = function(id){
