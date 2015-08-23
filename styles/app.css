@@ -1,0 +1,14 @@
+.intro-section{
+  padding:15px;
+  color:white;
+  font-size:225%;
+}
+
+.auth-card{
+  height:350px; 
+  width:300px;
+}
+
+.auth-tabs{
+  height: 100%;
+}

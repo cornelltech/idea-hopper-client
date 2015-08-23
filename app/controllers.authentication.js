@@ -23,7 +23,16 @@ angular.module('unicorn.authentication.controllers', [])
 
     $scope.user = {};
     $scope.authenticate = function(user, mode){
-      if(!emailCheck(user.email)){
+      if((mode=='register' && (!user.email || 
+                              !user.password || 
+                              !user.first_name || 
+                              !user.last_name || 
+                              !user.program))
+        || (mode=='signin' && (!user.email ||
+                               !user.password))){
+        return false
+      }
+      else if(!emailCheck(user.email)){
         return false;
       }else{
         var pass = user.password;
@@ -31,6 +40,7 @@ angular.module('unicorn.authentication.controllers', [])
           Authentication.registerUser(user)
             .then(function(s){
               if(s.status==201){ return s.data; }
+              else{ raiseWarning(s.data); throw "Error authenticating"; }
             }, function(e){console.log(e);})
 
             .then(function(user){
