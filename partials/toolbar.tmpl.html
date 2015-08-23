@@ -12,7 +12,8 @@
       
     <span flex></span>
 
-    <md-select ng-model="selectedBlessing"
+    <md-select ng-show="state!='application.account'"
+               ng-model="selectedBlessing"
                aria-label="Blessing Selection">
       <md-option ng-repeat="blessing in blessings.results" 
                  ng-click="broadcaseBlessing(blessing.id)"

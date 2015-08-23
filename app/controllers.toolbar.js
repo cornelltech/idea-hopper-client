@@ -5,6 +5,8 @@ angular.module('unicorn.toolbar.controllers', [])
   function($rootScope, $scope, $state, Account, 
     Blessing, Authentication){
 
+    $scope.state = $state.current.name;
+
     $scope.me = {};
     var syncMe = function(){
       Account.me()
