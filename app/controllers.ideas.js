@@ -5,9 +5,10 @@ angular.module('unicorn.ideas.controllers', [])
   
     $scope.searchFlag = false;
     $scope.toggleSearch = function(){
+      $scope.search = '';
       $scope.searchFlag = !$scope.searchFlag;
     };
-    
+
     $scope.orderingVar = '';
     $scope.orderingVarReverseFlag = false;
     $scope.toggleOrdering = function(param){

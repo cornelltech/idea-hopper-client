@@ -60,7 +60,7 @@
     </div>
 
     <md-list>
-      <md-list-item ng-if="blessingIdeas.results.length==0">
+      <md-list-item ng-if="blessingIdeas.results.length==0" layout="column" layout-align="center center">
         <p>There are no ideas yet :'(</p>
       </md-list-item>
 
@@ -68,6 +68,7 @@
                     layout="row"
                     style="border-bottom:1px solid rgba(0,0,0,0.12); padding: 10px;">
         <div class="idea-info"
+             flex-sm="60"
              flex="75" 
              ui-sref="application.ideas.idea({ pk: idea.id })"
              style="cursor: pointer;">
@@ -108,7 +109,11 @@
   </md-content>
 
   <!-- idea details -->
-  <md-content flex flex-order="2" flex-order-sm="1" style="max-height:89vh;">
-    <ui-view></ui-view>
+  <md-content hide-sm flex flex-order="2" flex-order-sm="1" style="max-height:89vh;">
+    <ui-view>
+      <div layout="column" layout-align="center center">
+        <img src="media/document.png" style="width:250px; height:250px; margin-top:100px;">
+      </div>
+    </ui-view>
   </md-content>
 </section>
