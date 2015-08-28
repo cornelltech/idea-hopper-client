@@ -50,6 +50,15 @@ angular.module('unicorn.ideas.controllers', [])
       }
     });
 
+    $scope.$on('upvotedIdea', function(evt, idea){
+      for(var i=0; i<$scope.blessingIdeas.results.length; i++){
+        if($scope.blessingIdeas.results[i].id==idea.id){
+          $scope.blessingIdeas.results[i] = idea;
+          break;
+        }
+      }
+    });
+
     $scope.upvoteIdea = function(idea){
 
       if(idea.liked){
@@ -59,6 +68,8 @@ angular.module('unicorn.ideas.controllers', [])
         idea.upvotes += 1;
         idea.liked = true;
       }
+
+      $rootScope.$broadcast('upvotedListIdea', idea);
 
       Idea.upvote(idea.id)
         .then(function(s){
@@ -177,11 +188,18 @@ angular.module('unicorn.ideas.controllers', [])
         idea.liked = true;
       }
 
+      $rootScope.$broadcast('upvotedIdea', idea);
+
       Idea.upvote(idea.id)
         .then(function(s){
           if(s.status==200){}
         }, function(e){console.log(e);});
     };
+
+    $scope.$on('upvotedListIdea', function(evt, idea){
+      $scope.idea.liked = idea.liked;
+      $scope.idea.upvotes = idea.upvotes;
+    });
 
 
     $scope.editing = false;
