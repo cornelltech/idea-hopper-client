@@ -39,8 +39,16 @@ angular.module('unicorn.ideas.controllers', [])
 
     $scope.$on('ideaCreated', function(evt, idea){
       syncBlessingIdeas(selectedBlessing);
-    })
+    });
 
+    $scope.$on('ideaDeleted', function(evt, idea){
+      for(var i=0; i<$scope.blessingIdeas.results.length; i++){
+        if($scope.blessingIdeas.results[i].id==idea.id){
+          $scope.blessingIdeas.results.splice(i, 1);
+          break;
+        }
+      }
+    });
 
     $scope.upvoteIdea = function(idea){
       Idea.upvote(idea.id)
@@ -62,7 +70,6 @@ angular.module('unicorn.ideas.controllers', [])
 
     $scope.idea = "";
     $scope.createIdea = function(){
-      console.log($scope.idea);
 
       var idea = {
                     "idea": $scope.idea,
@@ -168,6 +175,13 @@ angular.module('unicorn.ideas.controllers', [])
       Idea.updateIdea($scope.idea)
         .then(function(s){console.log(s)}, function(e){console.log(e);});
       $scope.toggleEditMode();
+    };
+
+    $scope.deleteIdea = function(){
+      Idea.deleteIdea($scope.idea)
+        .then(function(s){console.log(s)}, function(e){console.log(e);});
+      $rootScope.$broadcast('ideaDeleted', $scope.idea);
+      $state.go('^');
     };
 
 

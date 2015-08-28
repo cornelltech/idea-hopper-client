@@ -81,9 +81,21 @@ angular.module('unicorn.ideas.services', [])
       return response;
     };
 
+    var deleteIdea = function(idea){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/v1/ideas/' + idea.id + '/',
+                        method: 'DELETE',
+                        headers: { 
+                          'Authorization': 'Token ' + token },
+                      });
+      return response;
+    };
+
     return{
       createIdea: createIdea,
       updateIdea: updateIdea,
+      deleteIdea: deleteIdea,
       getIdeas: getIdeas,
       getIdea: getIdea,
       upvote: upvote,

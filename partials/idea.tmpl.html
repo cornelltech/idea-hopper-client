@@ -32,8 +32,17 @@
                      style="font-size:17px; padding-top:5px;">
             </md-icon>
         </md-button>
-          
-          
+
+        <md-button   ng-if="authored"
+                     aria-label="delete"
+                     ng-click="deleteIdea()" 
+                     class="md-icon-button">
+            <md-icon class="icon" 
+                     md-font-icon="ion-trash-b"
+                     style="font-size:17px; padding-top:5px;">
+            </md-icon>
+        </md-button>
+
       </div>
     </md-toolbar>
     
@@ -41,6 +50,9 @@
       <div ng-if="!editing">
         <h3 style="color: rgba(0,0,0,0.54);">Idea:</h3>
         <p style="padding:15px; padding-top:0px;">{{idea.idea}}</p>
+
+        <!-- <h5 style="color: rgba(0,0,0,0.54);">Team:</h5> -->
+        
       </div>
 
       <md-input-container flex ng-if="editing">

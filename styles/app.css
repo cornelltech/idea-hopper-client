@@ -12,3 +12,7 @@
 .auth-tabs{
   height: 100%;
 }
+
+.idea-content:hover{
+  background-color: #f7f7fa;
+}

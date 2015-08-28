@@ -65,6 +65,7 @@
       </md-list-item>
 
       <md-list-item ng-repeat="idea in blessingIdeas.results | filter: search | orderBy: orderingVar: orderingVarReverseFlag"
+                    class="idea-content"
                     layout="row"
                     style="border-bottom:1px solid rgba(0,0,0,0.12); padding: 10px;">
         <div class="idea-info"
@@ -89,9 +90,18 @@
              flex>
           <md-button ng-click="upvoteIdea(idea)" 
                      class="md-icon-button">
+            
             <md-icon class="icon" 
-                     md-svg-icon="actions:unicorn">
+                     md-svg-icon="actions:unicorn"
+                     ng-if="!idea.liked">
             </md-icon>
+
+            <md-icon class="icon" 
+                     style="color:#fa3ab3;"
+                     md-svg-icon="actions:unicorn"
+                     ng-if="idea.liked">
+            </md-icon>
+
             {{idea.upvotes}}
           </md-button>
           <md-button ng-click="focusOnIdea($event, idea)" 
@@ -109,7 +119,7 @@
   </md-content>
 
   <!-- idea details -->
-  <md-content hide-sm flex flex-order="2" flex-order-sm="1" style="max-height:89vh;">
+  <md-content flex flex-order="2" flex-order-sm="1" style="max-height:89vh;">
     <ui-view>
       <div layout="column" layout-align="center center">
         <img src="media/document.png" style="width:250px; height:250px; margin-top:100px;">

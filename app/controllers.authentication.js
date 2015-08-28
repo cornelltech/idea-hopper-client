@@ -6,11 +6,11 @@ angular.module('unicorn.authentication.controllers', [])
     $scope.positions = [{"key": "ME", "value": "MEng"},
                         {"key": "MB", "value": "MBA"},
                         {"key": "CM", "value": "Connective Media"},
-                        {"key": "HL", "value": "Healthy Life"},
+                        {"key": "HL", "value": "Health Tech"},
                         {"key": "FC", "value": "Faculty"},
                         {"key": "PH", "value": "PhD Student"},
                         {"key": "PD", "value": "PostDoc"},
-                        {"key": "DL", "value": "DevLab"},
+                        {"key": "DL", "value": "Dev Lab"},
                         {"key": "ST", "value": "Staff"}]
 
 
