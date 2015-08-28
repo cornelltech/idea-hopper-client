@@ -59,6 +59,15 @@ angular.module('unicorn.ideas.controllers', [])
       }
     });
 
+    $scope.$on('postedComment', function(evt, idea){
+      for(var i=0; i<$scope.blessingIdeas.results.length; i++){
+        if($scope.blessingIdeas.results[i].id==idea.id){
+          $scope.blessingIdeas.results[i].comment_count+=1;
+          break;
+        }
+      }
+    });
+
     $scope.upvoteIdea = function(idea){
 
       if(idea.liked){
@@ -174,6 +183,7 @@ angular.module('unicorn.ideas.controllers', [])
           comment.account = $rootScope.me;
           $scope.comments.results.unshift(comment);
           $scope.comments.count += 1;
+          $rootScope.$broadcast('postedComment', $scope.idea);
         }, function(e){console.log(e);});
 
     };
