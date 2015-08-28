@@ -51,9 +51,18 @@ angular.module('unicorn.ideas.controllers', [])
     });
 
     $scope.upvoteIdea = function(idea){
+
+      if(idea.liked){
+        idea.upvotes -= 1;
+        idea.liked = false;
+      }else{
+        idea.upvotes += 1;
+        idea.liked = true;
+      }
+
       Idea.upvote(idea.id)
         .then(function(s){
-          if(s.status==200){idea.upvotes += 1;}
+          if(s.status==200){}
         }, function(e){console.log(e);});
     };
 
@@ -159,9 +168,18 @@ angular.module('unicorn.ideas.controllers', [])
     };
 
     $scope.upvoteIdea = function(idea){
+
+      if(idea.liked){
+        idea.upvotes -= 1;
+        idea.liked = false;
+      }else{
+        idea.upvotes += 1;
+        idea.liked = true;
+      }
+
       Idea.upvote(idea.id)
         .then(function(s){
-          if(s.status==200){idea.upvotes += 1;}
+          if(s.status==200){}
         }, function(e){console.log(e);});
     };
 
