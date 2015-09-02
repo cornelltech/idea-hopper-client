@@ -90,12 +90,14 @@
                     layout="row"
                     layout-wrap
                     class="idea-content"
+                    ng-class="{focused: focusedIdeaID==idea.id}"
                     style="border-bottom:1px solid rgba(0,0,0,0.12);
                            padding:5px;">
         
         <div flex="100"
              layout="row"
              layout-align="start center"
+             ng-click="focusOnIdea(idea)"
              ui-sref="application.ideas.idea({ pk: idea.id })"
              style="cursor: pointer;">
           <p>{{ idea.idea }}</p>

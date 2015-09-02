@@ -3,6 +3,11 @@ angular.module('unicorn.ideas.controllers', [])
 .controller('IdeasController', ['$rootScope', '$scope', 'Blessing', 'Idea',
   function($rootScope, $scope, Blessing, Idea){
   
+    $scope.focusedIdeaID = -1;
+    $scope.focusOnIdea = function(idea){
+      $scope.focusedIdeaID = idea.id;
+    };
+
     // handle the search input toggle
     $scope.searchFlag = false;
     $scope.toggleSearch = function(){

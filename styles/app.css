@@ -16,3 +16,9 @@
 .idea-content:hover{
   background-color: #f7f7fa;
 }
+.focused{
+  background-color: #f7f7fa;
+}
+*:focus {
+    outline: 0;
+}
