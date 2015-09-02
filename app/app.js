@@ -17,11 +17,12 @@ angular.module('CTunicornucopia', ['ngMaterial',
                                    'unicorn.blessings.services',
                                    'unicorn.ideas.services',
                                    'unicorn.ideas.controllers',
+                                   'unicorn.utilities.services',
                                    'unicorn.gifs.services'])
 
 .constant('VERSION', 'v1')
-// .constant('DOMAIN', 'http://localhost:8000')
-.constant('DOMAIN', 'http://unicornucopia-dev.elasticbeanstalk.com')
+.constant('DOMAIN', 'http://localhost:8000')
+// .constant('DOMAIN', 'http://unicornucopia-dev.elasticbeanstalk.com')
 
 .constant('COLORS', ['#F44336', '#E91E63', '#9C27B0', '#673AB7', 
                      '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', 

@@ -27,6 +27,18 @@ angular.module('unicorn.accounts.services', [])
       return response;
     };
 
+    var getAccounts = function(){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/v1/accounts/',
+                        method: 'GET',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
+                      });
+      return response;
+    };
+
     var getAccountIdeas = function(pk){
       var token = Authentication.getToken();
       var response = $http({
@@ -39,7 +51,7 @@ angular.module('unicorn.accounts.services', [])
       return response;
     };
 
-    var getAccountUnicornedIdeas = function(pk){
+    var getAccountUpvotedIdeas = function(pk){
       var token = Authentication.getToken();
       var response = $http({
                         url: DOMAIN + '/api/v1/accounts/' + pk + '/upvotes/',
@@ -51,10 +63,24 @@ angular.module('unicorn.accounts.services', [])
       return response;
     };
 
+    var queryAccounts = function(q){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/v1/accounts/search/?query='+q,
+                        method: 'GET',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
+                      });
+      return response;
+    }
+
     return{
       me: me,
       getAccount: getAccount,
+      getAccounts: getAccounts,
       getAccountIdeas: getAccountIdeas,
-      getAccountUnicornedIdeas: getAccountUnicornedIdeas
+      getAccountUpvotedIdeas: getAccountUpvotedIdeas,
+      queryAccounts: queryAccounts
     };
-}]);
+}])

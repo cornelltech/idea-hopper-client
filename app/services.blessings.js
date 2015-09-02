@@ -32,3 +32,31 @@ angular.module('unicorn.blessings.services', [])
       getBlessingIdeas: getBlessingIdeas
     };
 }])
+
+.factory('BlessingManager', ['Blessing', 
+  function(Blessing){
+    
+    var focusedBlessing = null;
+    var blessings = [];
+
+    var syncBlessings = function(){
+      Blessing.getBlessings()
+        .then(function(s){
+          blessing = s.data.results;
+        }, function(e){console.log(e);});
+    };
+
+    var getBlessings = function(){
+      return blessings;
+    }
+
+    var setBlessing = function(blessing){
+      focusedBlessing = blessing;
+    };
+
+    return{
+      syncBlessings: syncBlessings,
+      getBlessings: getBlessings,
+      setBlessing: setBlessing
+    };
+}])

@@ -29,8 +29,21 @@ angular.module('unicorn.comments.services', [])
       return response;
     };
 
+    var postIdeaComment = function(idea, comment){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/' + VERSION + '/ideas/' + idea.id + '/add/comments/',
+                        method: 'POST',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
+                        data: comment
+                      });
+      return response;
+    };
+
     return{
       getIdeaComments: getIdeaComments,
-      postComment: postComment
+      postIdeaComment: postIdeaComment
     };
 }])

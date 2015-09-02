@@ -15,7 +15,7 @@
     <md-select ng-show="state!='application.account'"
                ng-model="selectedBlessing"
                aria-label="Blessing Selection">
-      <md-option ng-repeat="blessing in blessings.results" 
+      <md-option ng-repeat="blessing in blessings" 
                  ng-click="broadcaseBlessing(blessing.id)"
                  value="{{blessing.id}}">{{blessing.blessing}}</md-option>
     </md-select>

@@ -5,47 +5,48 @@ angular.module('unicorn.toolbar.controllers', [])
   function($rootScope, $scope, $state, Account, 
     Blessing, Authentication){
 
+    // capture the current state of the application
     $scope.state = $state.current.name;
 
+    // sync the logged in user
     $scope.me = {};
     var syncMe = function(){
       Account.me()
         .then(function(s){
           if(s.status==200){ return s.data; }
           else{ throw "error getting account"; }
-        }, function(e){console.log(e);})
-
+        }, function(e){ console.error(e); })
         .then(function(me){
           $scope.me = me;
           $rootScope.me = me;
-        }, function(e){console.log(e);});
+        }, function(e){ console.error(e); });
     }; syncMe();
 
+    // get a list of the blessings
     $scope.blessings = {};
     var syncBlessings = function(){
       Blessing.getBlessings()
         .then(function(s){
-          if(s.status==200){ return s.data; }
+          if(s.status==200){ return s.data.results; }
           else{ throw "error getting blessings"; }
-        }, function(e){console.log(e);})
-
+        })
         .then(function(blessings){
           $scope.blessings = blessings;
-
           // load up the latest blessing
-          $scope.broadcaseBlessing(blessings.results[0].id);
+          $scope.broadcastBlessing(blessings[0].id);
 
-        }, function(e){console.log(e);});
+        }, function(e){ console.error(e); });
     }; syncBlessings();
     
 
-    $scope.broadcaseBlessing = function(id){
+    // emit a broadcast on blessing selection
+    $scope.broadcastBlessing = function(id){
       $scope.selectedBlessing = id;
       $rootScope.selectedBlessingID = id;
       $rootScope.$broadcast('blessingSelection', id);
     };
     
-
+    // handle logout flow
     $scope.logout = function(){
         Authentication.logout();
         $state.go('authentication');

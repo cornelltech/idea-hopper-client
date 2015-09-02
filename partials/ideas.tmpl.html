@@ -12,6 +12,9 @@
                  md-font-icon="ion-search"
                  style="margin-top:5px; font-size:21px;">
         </md-icon>
+        <md-tooltip>
+          Search
+        </md-tooltip>
       </md-button>
 
       <md-button class="md-secondary md-icon-button"
@@ -50,6 +53,8 @@
                  ui-sref="application.ideas.create">+ Add an Idea</md-button>
     </div>
 
+
+
     <div ng-show="searchFlag" layout="row">
       <div flex layout layout-sm="column">
         <md-input-container style="width:100%">
@@ -59,36 +64,44 @@
       </div>
     </div>
 
+
+
+
     <md-list>
-      <md-list-item ng-if="blessingIdeas.results.length==0" layout="column" layout-align="center center">
+      <md-list-item ng-if="ideas.length==0" 
+                    layout="column" 
+                    layout-align="center center">
         <p>There are no ideas yet :'(</p>
       </md-list-item>
 
-      <md-list-item ng-repeat="idea in blessingIdeas.results | filter: search | orderBy: orderingVar: orderingVarReverseFlag"
-                    class="idea-content"
+      <md-list-item ng-repeat="idea in ideas"
                     layout="row"
-                    style="border-bottom:1px solid rgba(0,0,0,0.12); padding: 10px;">
+                    layout-wrap
+                    class="idea-content"
+                    style="border-bottom:1px solid rgba(0,0,0,0.12);
+                           padding:5px;">
         
-        <div class="idea-info"
-             flex-sm="60"
-             flex="70" 
+        <div flex="100"
+             layout="row"
+             layout-align="start center"
              ui-sref="application.ideas.idea({ pk: idea.id })"
              style="cursor: pointer;">
-          <div class="md-list-item-text">
-            <h3 style="color: rgba(0,0,0,0.54);
-                       margin:0px;
-                       font-size: 16px;
-                       font-weight: 400;
-                       letter-spacing: 0.01em;">
-              {{ idea.accounts[0].first_name }} {{ idea.accounts[0].last_name }}
-            </h3>
-            <p style="margin:0px;">{{ idea.idea }}</p>
-          </div>
+          <p>{{ idea.idea }}</p>
         </div>
-        <div class="idea-actions" 
+        
+        <div flex="30"
              layout="row"
-             layout-align="end"
-             flex>
+             layout-align="start center"
+             style="height:35px;">
+          <small style="color: rgba(0,0,0,0.54); font-size:50%;">
+            {{convertTime(idea.time_created)}}
+          </small>
+        </div>
+        <div flex="70"
+             layout="row"
+             layout-align="end center"
+             style="height:35px;">
+
           <md-button ng-click="upvoteIdea(idea)" 
                      class="md-icon-button">
             
@@ -103,20 +116,22 @@
                      ng-if="idea.liked">
             </md-icon>
 
-            {{idea.upvotes}}
+            {{idea.upvoters.length}}
           </md-button>
-          <md-button ng-click="focusOnIdea($event, idea)" 
+          <md-button ui-sref="application.ideas.idea({ pk: idea.id })" 
                      class="md-icon-button">
             <md-icon class="icon" 
                      md-font-icon="ion-chatboxes" 
                      style="margin-top:5px; font-size:21px;">
             </md-icon>
-            {{idea.comment_count}}
-          </md-button>
+            {{idea.comments.length}}
+          </md-button> 
+
         </div>
 
       </md-list-item>
     </md-list>
+
   </md-content>
 
   <!-- idea details -->

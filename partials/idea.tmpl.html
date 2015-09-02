@@ -2,6 +2,7 @@
   <md-card class="animated fadeIn" >
     <md-toolbar>
       <div class="md-toolbar-tools">
+        <h3>Idea</h3>
         <span flex></span>
 
         <md-button   ng-click="upvoteIdea(idea)" 
@@ -10,7 +11,10 @@
             <md-icon class="icon" 
                      md-svg-icon="actions:unicorn">
             </md-icon>
-            {{idea.upvotes}}
+            <md-tooltip>
+              Unicorn
+            </md-tooltip>
+            {{idea.upvoters.length}}
         </md-button>
 
         <md-button   ng-if="authored && !editing"
@@ -21,6 +25,9 @@
                      md-font-icon="ion-edit"
                      style="font-size:17px; padding-top:5px;">
             </md-icon>
+            <md-tooltip>
+              Edit
+            </md-tooltip>
         </md-button>
 
         <md-button   ng-if="editing"
@@ -31,6 +38,9 @@
                      md-font-icon="ion-ios-folder"
                      style="font-size:17px; padding-top:5px;">
             </md-icon>
+            <md-tooltip>
+              Save
+            </md-tooltip>
         </md-button>
 
         <md-button   ng-if="authored"
@@ -41,6 +51,9 @@
                      md-font-icon="ion-trash-b"
                      style="font-size:17px; padding-top:5px;">
             </md-icon>
+            <md-tooltip>
+              Delete
+            </md-tooltip>
         </md-button>
 
       </div>
@@ -48,23 +61,36 @@
     
     <md-card-content>
       <div ng-if="!editing">
-        <h3 style="color: rgba(0,0,0,0.54);">Idea:</h3>
-        <p style="padding:15px; padding-top:0px;">{{idea.idea}}</p>
-
-        <!-- <h5 style="color: rgba(0,0,0,0.54);">Team:</h5> -->
-        
+        <p style="padding:15px; padding-top:0px;">{{idea.idea}}</p>        
       </div>
 
       <md-input-container flex ng-if="editing">
-        <label>Idea</label>
+        
         <textarea ng-model="idea.idea" columns="1" md-maxlength="140"></textarea>
       </md-input-container>
       
       <md-divider ng-if="!editing"></md-divider>
+      
+      <div layout="row"
+           layout-align="end">
+
+           <avatar  flex="10" 
+                    ng-repeat="account in idea.accounts"
+                    account="account"
+                    style="padding-top:16px; margin-right:10px; cursor: pointer;"
+                    layout="column"
+                    layout-align="center center"
+                    ui-sref="application.account({ pk: comment.account.id })"
+                    ui-sref-opts="{reload: true}"></avatar>
+        
+      </div>
+
+
+
 
       <form>
         <md-input-container flex>
-          <label>Feedback</label>
+          <label>Comment</label>
           <textarea ng-init="comment" 
                     ng-model="comment.comment" 
                     columns="1" md-maxlength="500">
@@ -73,13 +99,13 @@
         
         <div layout="row" layout-align="end center">
           <md-button ng-click="postComment(comment)" 
-                     class="md-raised md-primary">Post</md-button>  
+                     class="md-raised md-primary">Comment</md-button>  
         </div>
       </form>
 
-      
+        
       <md-list>
-         <md-list-item ng-repeat="comment in comments.results"
+         <md-list-item ng-repeat="comment in comments"
                        class="md-3-line"
                        layout="row">
             
@@ -99,7 +125,7 @@
               </h3>
               <p>{{comment.comment}}</p>
 
-              <small style="position:absolute; bottom:0px; right:0px; color: rgba(0,0,0,0.54);">{{convertTime(comment.time_created)}}</small>
+              <small style="position:absolute; bottom:0px; right:0px; color: rgba(0,0,0,0.54); font-size:50%;">{{convertTime(comment.time_created)}}</small>
             </div>
           </md-list-item>
       </md-list>

@@ -2,23 +2,44 @@
   <md-card class="animated fadeIn" >
     <md-toolbar>
       <div class="md-toolbar-tools">
+        <h3>Add Idea</h3>
         <span flex></span>
-        <h2>New Idea</h2>
       </div>
     </md-toolbar>
     
     <md-card-content>
-      <h3 style="color: rgba(0,0,0,0.54);">Idea:</h3>
       <md-input-container flex>
-        <label>Idea</label>
+        <label>Your amazing idea</label>
         <textarea ng-model="idea" columns="1" md-maxlength="140"></textarea>
       </md-input-container>
+
+
+      <md-chips ng-model="authors" md-autocomplete-snap md-require-match>
+        <md-autocomplete
+            md-search-text="netID"
+            md-items="item in searchForAccounts(netID)"
+            md-item-text="item.email"
+            placeholder="Search by netID">
+          
+          <span md-highlight-text="email">{{item.first_name}} {{item.last_name}} ({{item.email}})</span>
+
+        </md-autocomplete>
+        <md-chip-template>
+          <span>
+            <strong>{{$chip.first_name}} {{$chip.last_name}}</strong>
+            <em>({{$chip.email}})</em>
+          </span>
+        </md-chip-template>
+      </md-chips>
+
+
+
       
       <div class="actions"
            layout="row"
            layout-align="end center">
         <md-button class="md-raised"
-                 ng-click="createIdea()">Create</md-button>
+                 ng-click="createIdea()">Add Idea</md-button>
       </div>
     </md-card-content>
   </md-card>
