@@ -153,20 +153,24 @@ angular.module('unicorn.ideas.controllers', [])
     $scope.idea = "";
     $scope.createIdea = function(){
 
-      // var idea = { "idea": $scope.idea,
-      //              "accounts": [$rootScope.me.id],
-      //              "blessings": [blessingID] };
-    
-      // Idea.createIdea(idea)
-      //   .then(function(s){
-      //     if(s.status==201){ return s.data; }
-      //     else{ throw "Error creating idea"; }
-      //   }, function(e){console.log(e);})
+      var idea = { "idea": $scope.idea,
+                   "accounts": [],
+                   "blessings": [blessingID] };
 
-      //   .then(function(idea){
-      //     broadcaseIdeaCreation(idea);
-      //     $state.go('application.ideas.idea', {'pk': idea.id});
-      //   }, function(e){console.log(e);});
+      for(var i=0; i<$scope.authors.length; i++){
+        idea.accounts.push($scope.authors[i].id);
+      }    
+
+      Idea.createIdea(idea)
+        .then(function(s){
+          if(s.status==201){ return s.data; }
+          else{ throw "Error creating idea"; }
+        }, function(e){console.log(e);})
+
+        .then(function(idea){
+          broadcaseIdeaCreation(idea);
+          $state.go('application.ideas.idea', {'pk': idea.id});
+        }, function(e){console.log(e);});
     };
 
     var broadcaseIdeaCreation = function(idea){
@@ -176,9 +180,9 @@ angular.module('unicorn.ideas.controllers', [])
 }])
 
 
-.controller('IdeaController', ['$rootScope', '$scope', '$state', 'Idea',
+.controller('IdeaController', ['$rootScope', '$scope', '$q', '$state', 'Account', 'Idea',
   'Comment',
-  function($rootScope, $scope, $state, Idea, Comment){
+  function($rootScope, $scope, $q, $state, Account, Idea, Comment){
   
     // get the id of the idea
     var pk = $state.params.pk;
@@ -211,6 +215,7 @@ angular.module('unicorn.ideas.controllers', [])
           }
 
           // sync idea with the scope
+          $scope.authors = idea.accounts;
           $scope.idea = idea;
         }, function(e){ console.error(e); })
     }; syncIdea();
@@ -229,12 +234,13 @@ angular.module('unicorn.ideas.controllers', [])
     }; syncComments();
 
     // handle the creation of a comment
+    $scope.comment = {"comment": ""};
     $scope.postComment = function(comment){
       comment.account = $rootScope.me.id;
       Comment.postIdeaComment($scope.idea, comment)
         .then(function(s){
           if(s.status==201){
-            $scope.comment = {};
+            $scope.comment = {"comment": ""};
             return s.data;
           }
         })
@@ -281,6 +287,31 @@ angular.module('unicorn.ideas.controllers', [])
       $scope.editing = !$scope.editing;
     };
 
+    $scope.me = {};
+    var syncMe = function(){
+      Account.me()
+        .then(function(s){
+          if(s.status==200){ return s.data; }
+          else{ throw "error getting account"; }
+        }, function(e){ console.error(e); })
+        .then(function(me){
+          $scope.me = me;
+          $scope.authors.push(me);
+        }, function(e){ console.error(e); });
+    }; syncMe();
+
+
+    $scope.authors = [];
+    $scope.searchForAccounts = function(q){
+      deferred = $q.defer();
+      Account.queryAccounts(q)
+        .then(function(s){
+          console.log(s.data);
+          deferred.resolve( s.data );
+        }, function(e){console.error(e);});
+        return deferred.promise;
+    };
+
     $scope.saveEdit = function(){
       var editedIdea = {
         "id": $scope.idea.id,
@@ -288,8 +319,8 @@ angular.module('unicorn.ideas.controllers', [])
         "accounts": [],
       };
 
-      for(var i=0; i<$scope.idea.accounts.length; i++){
-        editedIdea.accounts.push($scope.idea.accounts[i].id);
+      for(var i=0; i<$scope.authors.length; i++){
+        editedIdea.accounts.push($scope.authors[i].id);
       }
 
       Idea.updateIdea(editedIdea)

@@ -71,7 +71,27 @@
       
       <md-divider ng-if="!editing"></md-divider>
       
-      <div layout="row"
+      <md-chips ng-if="editing" ng-model="authors" md-autocomplete-snap md-require-match>
+        <md-autocomplete
+            md-search-text="netID"
+            md-items="item in searchForAccounts(netID)"
+            md-item-text="item.email"
+            placeholder="Search by netID">
+          
+          <span md-highlight-text="email">{{item.first_name}} {{item.last_name}} ({{item.email}})</span>
+
+        </md-autocomplete>
+        <md-chip-template>
+          <span>
+            <strong>{{$chip.first_name}} {{$chip.last_name}}</strong>
+            <em>({{$chip.email}})</em>
+          </span>
+        </md-chip-template>
+      </md-chips>
+
+      
+      <div ng-if="!editing"
+           layout="row"
            layout-align="end">
 
            <avatar  flex="10" 
@@ -88,11 +108,12 @@
 
 
 
+      <div ng-if="!editing">
+
       <form>
         <md-input-container flex>
           <label>Comment</label>
-          <textarea ng-init="comment" 
-                    ng-model="comment.comment" 
+          <textarea ng-model="comment.comment" 
                     columns="1" md-maxlength="500">
           </textarea>
         </md-input-container>
@@ -129,7 +150,7 @@
             </div>
           </md-list-item>
       </md-list>
-    
+      </div>
 
     </md-card-content>
   </md-card>
