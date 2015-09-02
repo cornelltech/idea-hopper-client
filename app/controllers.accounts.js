@@ -39,7 +39,7 @@ angular.module('unicorn.accounts.controllers', [])
 
     $scope.unicornedIdeas = {};
     var syncAccountUnicornedIdeas = function(pk){
-      Account.getAccountUnicornedIdeas(pk)
+      Account.getAccountUpvotedIdeas(pk)
         .then(function(s){
           if(s.status==200){
             return s.data;
