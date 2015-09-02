@@ -51,6 +51,7 @@ angular.module('unicorn.ideas.controllers', [])
 
     // on blessing selection sync the ideas for that blessing
     $scope.$on('blessingSelection', function(evt, id){
+      console.log("BLESSING SELECTED: " + id)
       selectedBlessing = id;
       syncBlessingIdeas(id);
     });

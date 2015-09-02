@@ -31,6 +31,7 @@ angular.module('unicorn.toolbar.controllers', [])
           else{ throw "error getting blessings"; }
         })
         .then(function(blessings){
+
           $scope.blessings = blessings;
           // load up the latest blessing
           $scope.broadcastBlessing(blessings[0].id);
@@ -41,6 +42,9 @@ angular.module('unicorn.toolbar.controllers', [])
 
     // emit a broadcast on blessing selection
     $scope.broadcastBlessing = function(id){
+
+      console.log(id);
+
       $scope.selectedBlessing = id;
       $rootScope.selectedBlessingID = id;
       $rootScope.$broadcast('blessingSelection', id);
