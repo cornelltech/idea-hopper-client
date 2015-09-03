@@ -26,7 +26,7 @@ angular.module('unicorn.ideas.controllers', [])
     };
 
     // sync the ideas in the blessing
-    $scope.ideas = {};
+    $scope.ideas = [];
     var selectedBlessing = -1;
     var syncBlessingIdeas = function(id){
       Blessing.getBlessingIdeas(id)
@@ -46,6 +46,7 @@ angular.module('unicorn.ideas.controllers', [])
           }
 
           $scope.ideas = ideas;
+          console.log(ideas);
         }, function(e){ console.error(e); });
     };
 

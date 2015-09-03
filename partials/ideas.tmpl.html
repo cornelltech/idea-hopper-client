@@ -18,17 +18,6 @@
       </md-button>
 
       <md-button class="md-secondary md-icon-button"
-                 aria-label="order by time updated"
-                 ng-click="toggleOrdering('time_updated')">
-        <md-icon class="icon" 
-                 md-font-icon="ion-edit"
-                 style="margin-top:5px; font-size:21px;">
-        </md-icon>
-        <md-tooltip>
-          Filter by Last Edit
-        </md-tooltip>
-      </md-button>
-      <md-button class="md-secondary md-icon-button"
                  aria-label="order by time created"
                  ng-click="toggleOrdering('time_created')">
         <md-icon class="icon" 
@@ -86,7 +75,7 @@
         <p>There are no ideas yet :'(</p>
       </md-list-item>
 
-      <md-list-item ng-repeat="idea in ideas"
+      <md-list-item ng-repeat="idea in ideas | filter:search | orderBy: orderingVar : orderingVarReverseFlag"
                     layout="row"
                     layout-wrap
                     class="idea-content"
