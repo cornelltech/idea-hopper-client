@@ -2,6 +2,9 @@
            aria-label="{{account.first_name[0]}}{{account.last_name[0]}}" 
            style="background-color:{{colorCoding[account.program]}}">
   <span>{{account.first_name[0]}}{{account.last_name[0]}}</span>
+  <md-tooltip>
+      {{account.first_name}} {{account.last_name}}
+  </md-tooltip> 
 </md-button>
 
 <!-- <md-button class="md-icon-button">

@@ -33,6 +33,7 @@ angular.module('unicorn.toolbar.controllers', [])
         .then(function(blessings){
 
           $scope.blessings = blessings;
+          $rootScope.blessingsList = blessings;
           // load up the latest blessing
           $scope.broadcastBlessing(blessings[0].id);
 

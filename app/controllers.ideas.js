@@ -46,13 +46,11 @@ angular.module('unicorn.ideas.controllers', [])
           }
 
           $scope.ideas = ideas;
-          console.log(ideas);
         }, function(e){ console.error(e); });
     };
 
     // on blessing selection sync the ideas for that blessing
     $scope.$on('blessingSelection', function(evt, id){
-      console.log("BLESSING SELECTED: " + id)
       selectedBlessing = id;
       syncBlessingIdeas(id);
     });
@@ -131,6 +129,9 @@ angular.module('unicorn.ideas.controllers', [])
     $scope.$on('blessingSelection', function(evt, id){
       blessingID = id;
     });
+
+
+    console.log($rootScope.blessingsList);
 
     $scope.me = {};
     var syncMe = function(){
