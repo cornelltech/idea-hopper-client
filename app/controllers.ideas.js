@@ -134,10 +134,7 @@ angular.module('unicorn.ideas.controllers', [])
     $scope.currentBlessingName = function(){
       return $rootScope.currentBlessings;
     }
-
-    console.log($rootScope);
-    console.log($rootScope.blessingsList);
-
+    
     $scope.me = {};
     var syncMe = function(){
       Account.me()
