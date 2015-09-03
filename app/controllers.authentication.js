@@ -64,7 +64,7 @@ angular.module('unicorn.authentication.controllers', [])
 
         .then(function(token){
           Authentication.cacheToken(token.token);
-          $state.go('application.ideas');
+          $state.go('application.ideas.create');
 
         }, function(e){console.log(e);});
     };

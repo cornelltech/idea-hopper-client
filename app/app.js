@@ -45,7 +45,7 @@ angular.module('CTunicornucopia', ['ngMaterial',
 
     //
     // For any unmatched url
-    $urlRouterProvider.otherwise('/ideas')
+    $urlRouterProvider.otherwise('/ideas/create')
     //
     // Set the states
     $stateProvider

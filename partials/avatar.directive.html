@@ -1,4 +1,10 @@
-<md-button class="md-icon-button">
+<md-button class="md-fab md-mini" 
+           aria-label="{{account.first_name[0]}}{{account.last_name[0]}}" 
+           style="background-color:{{colorCoding[account.program]}}">
+  <span>{{account.first_name[0]}}{{account.last_name[0]}}</span>
+</md-button>
+
+<!-- <md-button class="md-icon-button">
   <div style="width:30px;
               height:30px;
               border-radius:15px;
@@ -10,4 +16,4 @@
     </p>
   </div>
   <md-tooltip>{{account.first_name}} {{account.last_name}}</md-tooltip>
-</md-button>
+</md-button> -->

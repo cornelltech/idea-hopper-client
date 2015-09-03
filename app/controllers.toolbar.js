@@ -42,9 +42,6 @@ angular.module('unicorn.toolbar.controllers', [])
 
     // emit a broadcast on blessing selection
     $scope.broadcastBlessing = function(id){
-
-      console.log(id);
-
       $scope.selectedBlessing = id;
       $rootScope.selectedBlessingID = id;
       $rootScope.$broadcast('blessingSelection', id);
