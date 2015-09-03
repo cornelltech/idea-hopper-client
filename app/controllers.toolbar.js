@@ -33,7 +33,6 @@ angular.module('unicorn.toolbar.controllers', [])
         .then(function(blessings){
 
           $scope.blessings = blessings;
-          $rootScope.blessingsList = blessings;
           // load up the latest blessing
           $scope.broadcastBlessing(blessings[0].id);
 
@@ -45,6 +44,14 @@ angular.module('unicorn.toolbar.controllers', [])
     $scope.broadcastBlessing = function(id){
       $scope.selectedBlessing = id;
       $rootScope.selectedBlessingID = id;
+
+      for(var i=0; i<$scope.blessings.length; i++){
+        if($scope.blessings[i].id == id){
+          $rootScope.currentBlessings = $scope.blessings[i].blessing;
+        }
+      }
+      
+
       $rootScope.$broadcast('blessingSelection', id);
     };
     
