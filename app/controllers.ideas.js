@@ -157,16 +157,15 @@ angular.module('unicorn.ideas.controllers', [])
     };
 
     // Create a new idea the idea
-    $scope.idea = "";
-    $scope.createIdea = function(){
-
+  
+    $scope.createIdea = function(i){
       var idea = { "idea": $scope.idea,
                    "accounts": [],
                    "blessings": [blessingID] };
 
       for(var i=0; i<$scope.authors.length; i++){
         idea.accounts.push($scope.authors[i].id);
-      }    
+      }
 
       Idea.createIdea(idea)
         .then(function(s){
@@ -178,6 +177,7 @@ angular.module('unicorn.ideas.controllers', [])
           broadcaseIdeaCreation(idea);
           $state.go('application.ideas.idea', {'pk': idea.id});
         }, function(e){console.log(e);});
+        
     };
 
     var broadcaseIdeaCreation = function(idea){
