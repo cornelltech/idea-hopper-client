@@ -1,0 +1,157 @@
+<section layout="column">
+  <md-card class="animated fadeIn" >
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h3>Idea</h3>
+        <span flex></span>
+
+        <md-button   ng-click="upvoteIdea(idea)" 
+                     class="md-icon-button"
+                     aria-label="upvote">
+            <md-icon class="icon" 
+                     md-svg-icon="actions:unicorn">
+            </md-icon>
+            <md-tooltip>
+              Unicorn
+            </md-tooltip>
+            {{idea.upvoters.length}}
+        </md-button>
+
+        <md-button   ng-if="authored && !editing"
+                     aria-label="edit"
+                     ng-click="toggleEditMode()" 
+                     class="md-icon-button">
+            <md-icon class="icon" 
+                     md-font-icon="ion-edit"
+                     style="font-size:17px; padding-top:5px;">
+            </md-icon>
+            <md-tooltip>
+              Edit
+            </md-tooltip>
+        </md-button>
+
+        <md-button   ng-if="editing"
+                     aria-label="save"
+                     ng-click="saveEdit()" 
+                     class="md-icon-button">
+            <md-icon class="icon" 
+                     md-font-icon="ion-ios-folder"
+                     style="font-size:17px; padding-top:5px;">
+            </md-icon>
+            <md-tooltip>
+              Save
+            </md-tooltip>
+        </md-button>
+
+        <md-button   ng-if="authored"
+                     aria-label="delete"
+                     ng-click="deleteIdea()" 
+                     class="md-icon-button">
+            <md-icon class="icon" 
+                     md-font-icon="ion-trash-b"
+                     style="font-size:17px; padding-top:5px;">
+            </md-icon>
+            <md-tooltip>
+              Delete
+            </md-tooltip>
+        </md-button>
+
+      </div>
+    </md-toolbar>
+    
+    <md-card-content>
+      <div ng-if="!editing">
+        <p style="padding:15px; padding-top:0px;">{{idea.idea}}</p>        
+      </div>
+
+      <md-input-container flex ng-if="editing">
+        
+        <textarea ng-model="idea.idea" columns="1" md-maxlength="140"></textarea>
+      </md-input-container>
+      
+      <md-divider ng-if="!editing"></md-divider>
+      
+      <md-chips ng-if="editing" ng-model="authors" md-autocomplete-snap md-require-match>
+        <md-autocomplete
+            md-search-text="netID"
+            md-items="item in searchForAccounts(netID)"
+            md-item-text="item.email"
+            placeholder="Search by netID">
+          
+          <span md-highlight-text="email">{{item.first_name}} {{item.last_name}} ({{item.email}})</span>
+
+        </md-autocomplete>
+        <md-chip-template>
+          <span>
+            <strong>{{$chip.first_name}} {{$chip.last_name}}</strong>
+            <em>({{$chip.email}})</em>
+          </span>
+        </md-chip-template>
+      </md-chips>
+
+      
+      <div ng-if="!editing"
+           layout="row"
+           layout-align="end">
+
+           <avatar  flex="10" 
+                    ng-repeat="account in idea.accounts"
+                    account="account"
+                    style="padding-top:16px; margin-right:10px; cursor: pointer;"
+                    layout="column"
+                    layout-align="center center"
+                    ui-sref="application.account({ pk: account.id })"
+                    ui-sref-opts="{reload: true}"></avatar>
+        
+      </div>
+
+
+
+
+      <div ng-if="!editing">
+
+      <form>
+        <md-input-container flex>
+          <label>Comment</label>
+          <textarea ng-model="comment.comment" 
+                    columns="1" md-maxlength="500">
+          </textarea>
+        </md-input-container>
+        
+        <div layout="row" layout-align="end center">
+          <md-button ng-click="postComment(comment)" 
+                     class="md-raised md-primary">Comment</md-button>  
+        </div>
+      </form>
+
+        
+      <md-list>
+         <md-list-item ng-repeat="comment in comments"
+                       class="md-3-line"
+                       layout="row">
+            
+            <avatar flex="10" 
+                    account="comment.account"
+                    style="padding-top:16px; margin-right:10px; cursor: pointer;"
+                    layout="column"
+                    layout-align="center center"
+                    ui-sref="application.account({ pk: comment.account.id })"
+                    ui-sref-opts="{reload: true}"></avatar>
+
+            <div flex class="md-list-item-text">
+              <h3 ui-sref="application.account({ pk: comment.account.id })"
+                  ui-sref-opts="{reload: true}"
+                  style="cursor: pointer;">
+                {{comment.account.first_name}} {{comment.account.last_name}}
+              </h3>
+              <p>{{comment.comment}}</p>
+
+              <small style="position:absolute; bottom:0px; right:0px; color: rgba(0,0,0,0.54); font-size:50%;">{{convertTime(comment.time_created)}}</small>
+            </div>
+          </md-list-item>
+      </md-list>
+      </div>
+
+    </md-card-content>
+  </md-card>
+</section>

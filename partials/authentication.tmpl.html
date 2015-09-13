@@ -1,0 +1,113 @@
+<section flex
+         layout="column"
+         layout-align="center center"
+         style="background-color:#F44336;">
+
+    <div class="intro-section animated bounceInUp">
+      <h1 style="margin-bottom:0px;">Unicornucopia</h1>
+      <small>Collect, share, and discuss your ideas</small>  
+    </div>
+    
+
+    <md-card class="auth-card animated bounceInUp">
+        
+        <md-tabs class="auth-tabs">
+          
+          <!-- Register Tab -->
+          <md-tab id="registerTab"
+                  layout="column">
+            <md-tab-label>Register</md-tab-label>
+            <md-tab-body layout="column"
+                         flex>
+              <md-content layout-padding 
+                          layout="column" 
+                          flex>
+                <form name="registerForm" 
+                      flex>
+                  <div layout layout-sm="column">
+                    <md-input-container style="width:100%">
+                        <label>NetID email</label>
+                        <input ng-model="user.email" required>
+                      </md-input-container>
+                  </div>
+                  <div layout layout-sm="column">
+                    <md-input-container flex>
+                      <label>First name</label>
+                      <input ng-model="user.first_name" required>
+                    </md-input-container>
+                    <md-input-container flex>
+                      <label>Last Name</label>
+                      <input ng-model="user.last_name" required>
+                    </md-input-container>
+                  </div>
+                  <div layout layout-sm="column">
+                     <md-input-container flex>
+                      <label>Password</label>
+                      <input type="password" ng-model="user.password" required>
+                     </md-input-container>
+                     <md-select placeholder="Program" 
+                                flex
+                                ng-model="user.program" 
+                                style="width:100%;" required>
+                        <md-option ng-repeat="position in positions" 
+                                   value="{{position.key}}" 
+                                   style="width:100%;">
+                            {{position.value}}
+                        </md-option>
+                      </md-select>
+                  </div>
+                  <div layout="row"
+                     layout-align="end">
+                    <md-button class="md-raised md-primary"
+                               ng-click="authenticate(user, 'register')"
+                               type="submit">
+                      Go
+                    </md-button>  
+                  </div>
+                </form>
+              </md-content>
+            </md-tab-body>
+          </md-tab>
+          <!-- /Register Tab -->
+
+          <!-- Signin Tab -->
+          <md-tab id="signinTab"
+                  layout="column">
+            <md-tab-label>Signin</md-tab-label>
+            <md-tab-body layout="column"
+                         flex>
+              <md-content layout-padding 
+                          layout="column" 
+                          flex>
+                <form name="signupForm" 
+                      flex>
+                  <div layout layout-sm="column">
+                    <md-input-container style="width:100%">
+                        <label>NetID email</label>
+                        <input ng-model="user.email" required>
+                      </md-input-container>
+                  </div>
+                  <div layout layout-sm="column">
+                    <md-input-container style="width:100%">
+                        <label>password</label>
+                        <input type="password" ng-model="user.password" required>
+                      </md-input-container>
+                  </div>
+                  <div layout="row"
+                     layout-align="end">
+                  <md-button class="md-raised md-primary"
+                             ng-click="authenticate(user, 'signin')"
+                             type="submit">
+                    Go
+                  </md-button>  
+                </div>
+                </form>
+              </md-content>
+            </md-tab-body>
+          </md-tab>
+          <!-- /Signin Tab -->
+        
+        </md-tabs>
+
+    </md-card>
+</section>

@@ -83,7 +83,6 @@ angular.module('unicornucopia', [
       })
 
     $urlRouterProvider.otherwise('/application/ideas/create');
-
 }])
 
 .run(['$rootScope', '$state', '$urlRouter', 'Authentication', 
@@ -103,4 +102,5 @@ angular.module('unicornucopia', [
           $state.go('authentication');
         }
     });
+
 }]);

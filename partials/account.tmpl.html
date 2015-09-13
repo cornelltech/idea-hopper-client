@@ -1,0 +1,120 @@
+<section flex layout="column" layout-padding>
+  
+  <!-- account card -->
+  <md-content flex="20" layout="row" layout-align="center center">
+    <md-card>
+      <md-card-content>
+          <h2 class="md-title">{{account.first_name}} {{account.last_name}}</h2>
+          <p>{{account.email}}</p>
+      </md-card-content>
+    </md-card>
+  </md-content>
+
+  <div flex layout="row" layout-sm="column">
+    <!-- created ideas -->
+    <md-content flex style="max-height:60vh;">
+      <md-card>
+        <md-card-content>
+          <h2 class="md-title">My Ideas</h2>
+
+          <md-list>
+            <md-list-item ng-repeat="idea in ideas.results"
+                          layout="row"
+                          style="border-bottom:1px solid rgba(0,0,0,0.12); padding: 10px;">
+              <div class="idea-info"
+                   flex="60" 
+                   ui-sref="application.ideas.idea({ pk: idea.id })"
+                   ui-sref-opts="{reload: true}"
+                   style="cursor: pointer;">
+                <div class="md-list-item-text">
+                  <h3 style="color: rgba(0,0,0,0.54);
+                             margin:0px;
+                             font-size: 16px;
+                             font-weight: 400;
+                             letter-spacing: 0.01em;">
+                    {{ idea.accounts[0].first_name }} {{ idea.accounts[0].last_name }}
+                  </h3>
+                  <p style="margin:0px;">{{ idea.idea }}</p>
+                </div>
+              </div>
+              <div class="idea-actions" 
+                   layout="row"
+                   layout-align="end"
+                   flex>
+                <md-button ng-click="upvoteIdea(idea)" 
+                           class="md-icon-button">
+                  <md-icon class="icon" 
+                           md-svg-icon="actions:unicorn">
+                  </md-icon>
+                  {{idea.upvoters.length}}
+                </md-button>
+                <md-button ng-click="focusOnIdea($event, idea)" 
+                           class="md-icon-button">
+                  <md-icon class="icon" 
+                           md-font-icon="ion-chatboxes" 
+                           style="margin-top:5px; font-size:21px;">
+                  </md-icon>
+                  {{idea.comments.length}}
+                </md-button>
+              </div>
+
+            </md-list-item>
+          </md-list>
+        <md-card-content>
+      </md-card>
+    </md-content>
+
+    <!-- unicorned ideas -->
+    <md-content flex style="max-height:60vh;">
+      <md-card>
+        <md-card-content>
+          <h2 class="md-title">My Feedback</h2>
+
+          <md-list>
+            <md-list-item ng-repeat="idea in unicornedIdeas.results"
+                          layout="row"
+                          style="border-bottom:1px solid rgba(0,0,0,0.12); padding: 10px;">
+              <div class="idea-info"
+                   flex="60" 
+                   ui-sref="application.ideas.idea({ pk: idea.id })"
+                   ui-sref-opts="{reload: true}"
+                   style="cursor: pointer;">
+                <div class="md-list-item-text">
+                  <h3 style="color: rgba(0,0,0,0.54);
+                             margin:0px;
+                             font-size: 16px;
+                             font-weight: 400;
+                             letter-spacing: 0.01em;">
+                    {{ idea.accounts[0].first_name }} {{ idea.accounts[0].last_name }}
+                  </h3>
+                  <p style="margin:0px;">{{ idea.idea }}</p>
+                </div>
+              </div>
+              <div class="idea-actions" 
+                   layout="row"
+                   layout-align="end"
+                   flex>
+                <md-button ng-click="upvoteIdea(idea)" 
+                           class="md-icon-button">
+                  <md-icon class="icon" 
+                           md-svg-icon="actions:unicorn">
+                  </md-icon>
+                  {{idea.upvoters.length}}
+                </md-button>
+                <md-button ng-click="focusOnIdea($event, idea)" 
+                           class="md-icon-button">
+                  <md-icon class="icon" 
+                           md-font-icon="ion-chatboxes" 
+                           style="margin-top:5px; font-size:21px;">
+                  </md-icon>
+                  {{idea.comments.length}}
+                </md-button>
+              </div>
+
+            </md-list-item>
+          </md-list>
+        <md-card-content>
+      </md-card>
+    </md-content>
+
+</section>

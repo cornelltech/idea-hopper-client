@@ -1,0 +1,24 @@
+.intro-section{
+  padding:15px;
+  color:white;
+  font-size:225%;
+}
+
+.auth-card{
+  height:350px; 
+  width:300px;
+}
+
+.auth-tabs{
+  height: 100%;
+}
+
+.idea-content:hover{
+  background-color: #f7f7fa;
+}
+.focused{
+  background-color: #f7f7fa;
+}
+*:focus {
+    outline: 0;
+}

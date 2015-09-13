@@ -1,0 +1,156 @@
+<section flex layout-sm="column" layout="row" layout-padding>
+  <!-- idea list -->
+  <md-content flex="40" flex-sm="100" flex-order="1" flex-order-sm="2" style="max-height:89vh;">
+
+    <div layout="row"
+         layout-align="center center">
+
+      <md-button class="md-secondary md-icon-button"
+                 aria-label="search"
+                 ng-click="toggleSearch()">
+        <md-icon class="icon" 
+                 md-font-icon="ion-search"
+                 style="margin-top:5px; font-size:21px;">
+        </md-icon>
+        <md-tooltip>
+          Search
+        </md-tooltip>
+      </md-button>
+
+      <md-button class="md-secondary md-icon-button"
+                 aria-label="order by time created"
+                 ng-click="toggleOrdering('time_created')">
+        <md-icon class="icon" 
+                 md-font-icon="ion-ios-clock-outline"
+                 style="margin-top:5px; font-size:21px;">
+        </md-icon>
+        <md-tooltip>
+          Filter by Time Created
+        </md-tooltip>
+      </md-button>
+      <md-button class="md-secondary md-icon-button"
+                 aria-label="order by upvote"
+                 ng-click="toggleOrdering('upvotes')">
+        <md-icon class="icon" 
+                 md-svg-icon="actions:unicorn">
+        </md-icon>
+        <md-tooltip>
+          Filter by Unicorns
+        </md-tooltip>
+      </md-button>
+      <md-button class="md-secondary md-icon-button"
+                 aria-label="order by comment count"
+                 ng-click="toggleOrdering('comment_count')">
+        <md-icon class="icon" 
+                 md-font-icon="ion-chatboxes" 
+                 style="margin-top:5px; font-size:21px;">
+        </md-icon>
+        <md-tooltip>
+          Filter by Comment Count
+        </md-tooltip>
+      </md-button>
+
+      <md-button class="md-secondary"
+                 ui-sref="application.ideas.create">Add an Idea</md-button>
+    </div>
+
+
+
+    <div ng-show="searchFlag" layout="row">
+      <div flex layout layout-sm="column">
+        <md-input-container style="width:100%">
+            <label>Search for ideas</label>
+            <input ng-model="search">
+          </md-input-container>
+      </div>
+    </div>
+
+
+
+
+    <md-list>
+      <md-list-item ng-if="ideas.length==0" 
+                    layout="column" 
+                    layout-align="center center">
+        <p>There are no ideas yet :'(</p>
+      </md-list-item>
+
+      <md-list-item ng-repeat="idea in ideas | filter:search | orderBy: orderingVar : orderingVarReverseFlag"
+                    layout="row"
+                    layout-wrap
+                    class="idea-content"
+                    ng-class="{focused: focusedIdeaID==idea.id}"
+                    style="border-bottom:1px solid rgba(0,0,0,0.12);
+                           padding:5px;">
+        
+        <div flex="100"
+             layout="row"
+             layout-align="start center"
+             ng-click="focusOnIdea(idea)"
+             ui-sref="application.ideas.idea({ pk: idea.id })"
+             style="cursor: pointer;">
+          <p>{{ idea.idea }}</p>
+        </div>
+        
+        <div flex="30"
+             layout="row"
+             layout-align="start center"
+             style="height:35px;">
+          <small style="color: rgba(0,0,0,0.54); font-size:50%;">
+            {{convertTime(idea.time_created)}}
+          </small>
+        </div>
+        <div flex="70"
+             layout="row"
+             layout-align="end center"
+             style="height:35px;">
+
+          <md-button ng-click="upvoteIdea(idea)" 
+                     class="md-icon-button">
+            
+            <md-icon class="icon" 
+                     md-svg-icon="actions:unicorn"
+                     ng-if="!idea.liked">
+            </md-icon>
+
+            <md-icon class="icon" 
+                     style="color:#fa3ab3;"
+                     md-svg-icon="actions:unicorn"
+                     ng-if="idea.liked">
+            </md-icon>
+
+            <md-tooltip>
+              Unicorn
+            </md-tooltip>
+
+            {{idea.upvoters.length}}
+          </md-button>
+          <md-button ui-sref="application.ideas.idea({ pk: idea.id })" 
+                     class="md-icon-button">
+            <md-icon class="icon" 
+                     md-font-icon="ion-chatboxes" 
+                     style="margin-top:5px; font-size:21px;">
+            </md-icon>
+            <md-tooltip>
+              Comment
+            </md-tooltip>
+
+            {{idea.comments.length}}
+          </md-button> 
+
+        </div>
+
+      </md-list-item>
+    </md-list>
+
+  </md-content>
+
+  <!-- idea details -->
+  <md-content flex flex-order="2" flex-order-sm="1" style="max-height:89vh;">
+    <ui-view>
+      <div layout="column" layout-align="center center">
+        <img src="media/document.png" style="width:250px; height:250px; margin-top:100px;">
+      </div>
+    </ui-view>
+  </md-content>
+</section>

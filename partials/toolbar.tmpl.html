@@ -1,0 +1,51 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" 
+               aria-label="Unicornutopia" 
+               ui-sref="application.ideas.create"
+               ui-sref-opts="{reload: true}">
+      <md-icon md-svg-icon="actions:unicorn"></md-icon>
+    </md-button>
+    <h2>
+      <span>Unicornucopia</span>
+    </h2>
+      
+    <span flex></span>
+
+    <md-select ng-show="state!='application.account'"
+               ng-model="selectedBlessing"
+               aria-label="Blessing Selection">
+      <md-option ng-repeat="blessing in blessings" 
+                 ng-click="broadcastBlessing(blessing.id)"
+                 value="{{blessing.id}}">{{blessing.blessing}}</md-option>
+    </md-select>
+
+    <md-button class="md-icon-button" 
+               href="https://github.com/cornelltech/idea-hopper-client/issues"
+               target="_blank"
+               aria-label="Github Issue">
+      <md-icon md-font-icon="ion-speakerphone"
+               style="font-size:23px;"></md-icon>
+        <md-tooltip>
+          File Issues
+        </md-tooltip> 
+    </md-button>
+
+    <md-button aria-label="{{me.first_name}} {{me.last_name}}"
+               ui-sref="application.account({ pk: me.id })"
+               ui-sref-opts="{reload: true}">
+        {{me.first_name}} {{me.last_name}}
+    </md-button>
+
+    <md-button class="md-icon-button" 
+               ng-click="logout()"
+               aria-label="logout">
+      <md-icon md-font-icon="ion-log-out"
+               style="font-size:23px;"></md-icon>
+    </md-button>
+      
+  </div>
+</md-toolbar>
+
+<!-- content goes here -->
+<ui-view flex layout="column"></ui-view>
