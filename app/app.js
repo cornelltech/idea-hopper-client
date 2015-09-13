@@ -26,7 +26,6 @@ angular.module('unicornucopia', [
   
 ])
 
-.value('VERSION', '1')
 .constant('API_VERSION', '1')
 .constant('PREFIX', 'APP')
 // .constant('DOMAIN', 'http://localhost:8000')
@@ -92,15 +91,21 @@ angular.module('unicornucopia', [
         // Halt state change from even starting
         evt.preventDefault();
         // Verify the user has a session token
-        var sessionToken = Authentication.getToken();
-        // Continue with the update and state transition if logic allows
-        if(sessionToken){
-          $rootScope.authentication = {'status': true};
-          $urlRouter.sync();
-        }else{
+        try{
+          var sessionToken = Authentication.getToken();
+          // Continue with the update and state transition if logic allows
+          if(sessionToken){
+            $rootScope.authentication = {'status': true};
+            $urlRouter.sync();
+          }else{
+            $rootScope.authentication = {'status': false};
+            $state.go('authentication');
+          }
+        }catch(e){
           $rootScope.authentication = {'status': false};
           $state.go('authentication');
         }
+        
     });
 
 }]);
