@@ -1,0 +1,114 @@
+
+  <md-card class="animated fadeIn" >
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h3>Idea</h3>
+        <span flex></span>
+
+        <md-button ng-click="unicorn()" class="md-icon-button" aria-label="upvote">
+          <md-icon class="icon" md-svg-icon="actions:unicorn"></md-icon>
+          <md-tooltip>Unicorn Idea</md-tooltip>
+          {{idea.upvoter_count}}
+        </md-button>
+
+        <md-button class="md-icon-button" aria-label="comments">
+          <md-icon class="icon" md-font-icon="ion-chatboxes" style="font-size:17px; padding-top:5px;"></md-icon>
+          <md-tooltip>Comments</md-tooltip>
+          {{idea.comments_count}}
+        </md-button>
+
+        <md-button ng-if="idea.authored && !editing" aria-label="edit" ng-click="toggleEditMode()" class="md-icon-button">
+          <md-icon class="icon" md-font-icon="ion-edit" style="font-size:17px; padding-top:5px;"></md-icon>
+          <md-tooltip>Edit</md-tooltip>
+        </md-button>
+
+        <md-button ng-if="editing" aria-label="save" ng-click="updateIdea(idea)" class="md-icon-button">
+          <md-icon class="icon" md-font-icon="ion-ios-folder" style="font-size:17px; padding-top:5px;"></md-icon>
+          <md-tooltip>Save</md-tooltip>
+        </md-button>
+
+        <md-button ng-if="idea.authored" aria-label="delete" ng-click="deleteIdea(idea.id)" class="md-icon-button">
+          <md-icon class="icon" md-font-icon="ion-trash-b" style="font-size:17px; padding-top:5px;"></md-icon>
+          <md-tooltip>Delete</md-tooltip>
+        </md-button>
+
+      </div>
+    </md-toolbar>
+    
+    <md-card-content>
+      <div ng-if="!editing">
+        <p style="padding:15px; padding-top:0px;">{{idea.idea}}</p>        
+      </div>
+
+      <md-input-container flex ng-if="editing">
+        <textarea ng-model="idea.idea" columns="1" md-maxlength="140" aria-label="idea"></textarea>
+      </md-input-container>
+      
+      <md-divider ng-if="!editing"></md-divider>
+
+      <md-chips ng-if="editing" ng-model="idea.accounts" md-autocomplete-snap md-require-match>
+        <md-autocomplete
+            md-search-text="netID"
+            md-items="item in searchForAccounts(netID)"
+            md-item-text="item.email"
+            placeholder="Search by netID">
+          <span md-highlight-text="email">{{item.first_name}} {{item.last_name}} ({{item.email}})</span>
+        </md-autocomplete>
+        <md-chip-template>
+          <span>
+            <strong>{{$chip.first_name}} {{$chip.last_name}}</strong>
+            <em>({{$chip.email}})</em>
+          </span>
+        </md-chip-template>
+      </md-chips>
+      
+      <!-- authors -->
+      <md-subheader ng-if="!editing" class="md-no-sticky">Contributors:</md-subheader>
+      <div ng-if="!editing" layout="row" layout-align="end">
+         <avatar  flex="10" 
+                  ng-repeat="account in idea.accounts"
+                  account="account"
+                  style="padding-top:16px; margin-right:10px; cursor: pointer;"
+                  layout="column"
+                  layout-align="center center"></avatar>
+      </div>
+
+      <!-- likers -->
+      <md-subheader ng-if="!editing" class="md-no-sticky">Unicorns ({{idea.upvoter_count}}):</md-subheader>
+      <div ng-if="!editing" layout="row" layout-align="end" layout-wrap>
+         <avatar  flex="10" 
+                  ng-repeat="account in idea.upvoters"
+                  account="account"
+                  style="padding-top:16px; margin-right:10px; cursor: pointer;"
+                  layout="column"
+                  layout-align="center center"></avatar>
+      </div>
+
+      <div ng-if="!editing">
+        <form>
+          <md-input-container flex>
+            <label>Comment</label>
+            <textarea ng-model="comment.comment" columns="1" md-maxlength="500" aria-label="comment">
+            </textarea>
+          </md-input-container>
+
+          <div layout="row" layout-align="end center">
+            <md-button ng-click="postComment()" class="md-raised md-primary" type="submit">
+              Comment
+            </md-button>  
+          </div>
+        </form>
+
+        <!-- loading spinner -->
+        <div ng-if="loadingComments" flex layout="column" layout-align="center center">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+
+        <md-list ng-if="!loadingComments">
+           <comment ng-repeat="comment in comments" comment="comment"></comment>
+        </md-list>
+        
+      </div>
+
+    </md-card-content>
+  </md-card>

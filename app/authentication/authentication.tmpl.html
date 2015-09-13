@@ -1,0 +1,108 @@
+<section flex
+         layout="column"
+         layout-align="center center"
+         class="bg-primary">
+  
+  <h1 style="color:white;">Unicornucopia</h1>
+
+  <md-card class="auth-card">
+    <md-card-content flex layout="column">
+      
+      <md-tabs flex layout="column">
+        
+        <md-tab id="signup-tab" flex layout="column">
+          <md-tab-label>Signup</md-tab-label>
+          <md-tab-content flex layout="column">
+
+            <span class="error" ng-if="errorMessage.flag">The email you provided is taken :/</span>
+
+            <form flex layout="column">
+              <section flex layout="column">
+                
+                <div layout layout-sm="column">
+                  <md-input-container style="width:100%">
+                      <label>NetID Email</label>
+                      <input ng-model="account.email" required type="email">
+                    </md-input-container>
+                </div>
+
+                <div layout layout-sm="column">
+                  <md-input-container flex>
+                    <label>First name</label>
+                    <input ng-model="account.first_name" required type="text">
+                  </md-input-container>
+                  <md-input-container flex>
+                    <label>Last Name</label>
+                    <input ng-model="account.last_name" required type="text">
+                  </md-input-container>
+                </div>
+
+                <div layout layout-sm="column">
+                  <md-input-container style="width:100%">
+                    <label>Password</label>
+                    <input ng-model="account.password" required type="password">
+                  </md-input-container>
+                  <md-select placeholder="Program" 
+                            flex
+                            ng-model="account.program" 
+                            style="width:100%;" required>
+                    <md-option ng-repeat="position in positions" 
+                               value="{{position.key}}" 
+                               style="width:100%;">
+                        {{position.value}}
+                    </md-option>
+                  </md-select>
+
+                </div>
+                
+              </section>
+
+              <div layout="row" layout-align="end center">
+                <md-button type="submit" ng-click="auth(account, mode='signup')">Signup</md-button>
+              </div>
+            </form>
+            
+          </md-tab-content>
+        </md-tab>
+
+        <md-tab id="signin-tab" flex layout="column">
+          <md-tab-label>Signin</md-tab-label>
+          <md-tab-content flex layout="column">
+            
+            <span class="error" ng-if="errorMessage.flag">Email/Password combination did not match :/</span>
+
+            <form flex layout="column">
+              <section flex layout="column">
+                
+                <div layout layout-sm="column">
+                  <md-input-container style="width:100%">
+                      <label>NetID Email</label>
+                      <input ng-model="account.email" required type="text">
+                    </md-input-container>
+                </div>
+
+                <div layout layout-sm="column">
+                  <md-input-container style="width:100%">
+                      <label>Password</label>
+                      <input ng-model="account.password" required type="password">
+                    </md-input-container>
+                </div>
+                
+              </section>
+
+              <div layout="row" layout-align="end center">
+                <md-button type="submit" ng-click="auth(account, mode='signin')">Signin</md-button>
+              </div>
+            </form>
+
+          </md-tab-content>
+
+        </md-tab>
+
+      </md-tabs>
+
+    </md-card-content>
+
+  </md-card>
+
+</section>

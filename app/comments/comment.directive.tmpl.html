@@ -1,0 +1,23 @@
+<md-list-item class="md-3-line" layout="row">
+  
+  <avatar flex="10" 
+          account="comment.account"
+          style="padding-top:16px; margin-right:10px; cursor: pointer;"
+          layout="column"
+          layout-align="center center"
+          ui-sref="application.account({ id: comment.account.id })"
+          ui-sref-opts="{reload: true}"></avatar>
+
+  <div flex class="md-list-item-text">
+    <h3 ui-sref="application.account({ id: comment.account.id })"
+        ui-sref-opts="{reload: true}"
+        style="cursor: pointer;">
+      {{comment.account.first_name}} {{comment.account.last_name}}
+    </h3>
+    <p>{{comment.comment}}</p>
+
+    <small style="position:absolute; bottom:0px; right:0px; color: rgba(0,0,0,0.54); font-size:50%;">
+      <span>{{comment.time_created | date:"MM/dd/yyyy 'at' h:mma"}}</span>
+    </small>
+  </div>
+</md-list-item>

@@ -1,0 +1,74 @@
+<md-content flex layout-sm="column" layout="row">
+
+
+  <md-content style="max-height: 90vh;" flex-gt-sm="45" layout="column" layout-padding>
+    <md-card><md-card-content>
+    <md-list>
+      <md-subheader class="md-no-sticky">Blessings</md-subheader>
+      <md-list-item>
+        
+        <md-select flex ng-model="focusedBlessing" aria-label="Blessing Selection">
+          <md-option ng-repeat="blessing in blessings" 
+                     ng-click="selectBlessing(blessing.id)"
+                     value="{{blessing.id}}">{{blessing.blessing}}</md-option>
+        </md-select>      
+        
+      </md-list-item>
+
+      <md-subheader class="md-no-sticky">Search {{ ideas.length }} ideas</md-subheader>
+      <md-list-item layout="row">
+        <div flex layout layout-sm="column">
+          <md-input-container style="width:100%">
+              <label>Search for ideas in this blessing</label>
+              <input ng-model="q">
+            </md-input-container>
+        </div>
+      </md-list-item>
+    </md-list>
+    </md-card-content></md-card>
+    <!-- loading spinner -->
+    <div ng-if="loadingIdeas" flex layout="column" layout-align="center center">
+      <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+    </div>
+  
+    <md-list ng-if="!loadingIdeas" flex layout="column">
+      
+      <md-subheader class="md-no-sticky">
+        <span>Sorting:</span>
+        <md-button class="md-secondary md-icon-button" aria-label="order by time created" ng-click="sortIdeas('time')">
+          <md-icon class="icon" ng-class="{'md-accent':sortParam=='time'}" md-font-icon="ion-ios-clock-outline" style="margin-top:5px; font-size:21px;">
+          </md-icon>
+          <md-tooltip>
+            Most Recent
+          </md-tooltip>
+        </md-button>
+      
+        <md-button class="md-secondary md-icon-button" aria-label="order by upvote" ng-click="sortIdeas('unicorns')">
+          <md-icon class="icon" ng-class="{'md-accent':sortParam=='unicorns'}" md-svg-icon="actions:unicorn">
+          </md-icon>
+          <md-tooltip>
+            Most Unicorned
+          </md-tooltip>
+        </md-button>
+
+        <md-button class="md-secondary md-icon-button" aria-label="order by comment count" ng-click="sortIdeas('comments')">
+          <md-icon class="icon" ng-class="{'md-accent':sortParam=='comments'}" md-font-icon="ion-chatboxes" style="margin-top:5px; font-size:21px;">
+          </md-icon>
+          <md-tooltip>
+            Most Commented
+          </md-tooltip>
+        </md-button>
+      </md-subheader>
+      
+      <idealistitem ng-repeat="idea in ideas | filter:q" idea="idea"></idealistitem>
+
+    </md-list>
+    
+
+  </md-content>
+
+  <md-content style="max-height: 90vh;" flex>
+    <ui-view flex></ui-view>
+  </md-content>
+  
+</md-content>

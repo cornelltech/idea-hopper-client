@@ -1,0 +1,32 @@
+<md-list-item layout="column" layout-padding class="idea-list-item">
+  
+  <div style="width:100%; cursor:pointer;" ui-sref="application.ideas.detail({'id': idea.id})">{{ idea.idea }}</div>
+  
+  <div flex layout="row" style="width: 100%;">
+    
+    <div flex="70" layout="row" layout-align="start center">
+      <avatar ng-repeat="account in idea.accounts" account="account"></avatar>
+    </div>
+    
+    <div flex layout="row" layout-align="end center">
+      <md-button class="md-icon-button" aria-label="Unicorns" ng-click="unicorn()">
+        <md-icon md-svg-icon="actions:unicorn" ng-class="{'md-accent':idea.liked}"></md-icon>
+        <md-tooltip>Unicorns</md-tooltip>
+        {{ idea.upvoter_count }}
+      </md-button>
+
+      <md-button class="md-icon-button" aria-label="Add a comment" ui-sref="application.ideas.detail({'id': idea.id})">
+        <md-icon class="toolbar-icon" md-font-icon="ion-chatboxes"></md-icon>
+        <md-tooltip>See Comments</md-tooltip>
+        {{ idea.comments_count }}
+      </md-button>
+    </div>
+
+  </div>
+</md-list-item>
+
+<small style="color: rgba(0,0,0,0.54); font-size:50%;">
+  <span>{{idea.time_created | date:"MM/dd/yyyy 'at' h:mma"}}</span>
+</small>
+
+<md-divider></md-divider>

@@ -1,0 +1,29 @@
+/* app css stylesheet */
+
+.bg-primary{
+  background-color: #F44336;
+}
+
+.error{
+  text-align: center;
+  color: red;
+}
+
+.toolbar-icon{
+  font-size: 25px;
+}
+
+.auth-card{
+  width:325px;
+  height:400px;
+}
+
+.idea-list-item:hover{
+  background-color: #f7f7fa;
+}
+.focused{
+  background-color: #f7f7fa;
+}
+*:focus {
+    outline: 0;
+}

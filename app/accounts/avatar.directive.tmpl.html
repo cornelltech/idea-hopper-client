@@ -1,0 +1,9 @@
+<md-button class="md-fab md-mini" 
+           aria-label="{{account.first_name}} {{account.last_name}}"
+           style="background-color:{{colorCoding[account.program]}}; color:white;"
+           ui-sref="application.account({'id': account.id})">
+  <span>{{account.first_name[0]}}{{account.last_name[0]}}</span>
+  <md-tooltip>
+      {{account.first_name}} {{account.last_name}}
+  </md-tooltip> 
+</md-button>

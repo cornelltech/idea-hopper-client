@@ -1,0 +1,56 @@
+<md-card>
+  <md-card-content layout="column">
+    <md-list>
+      <md-list-item class="md-3-line" layout="row">
+        
+        <avatar flex="10" 
+                account="account"
+                style="padding-top:16px; margin-right:10px; cursor: pointer;"
+                layout="column"
+                layout-align="center center"
+                ui-sref="application.account({ id: account.id })"
+                ui-sref-opts="{reload: true}"></avatar>
+
+
+        <div class="md-list-item-text" layout="column">
+          <h3>{{ account.first_name }} {{ account.last_name }}</h3>
+          <h4>Program: {{ positions[account.program] }}</h4>
+          <p>Ideas Created: {{ account.ideas_count }} | Ideas Unicorned: {{ account.unicorns_count }} | Comments Made: {{ account.comments_count }}</p>
+        </div>
+      </md-list-item>
+    </md-list>
+    
+    
+    
+    
+  </md-card-content>
+</md-card>
+
+<div layout="row">
+  <md-card flex>
+    <md-tabs  md-dynamic-height md-border-bottom class="md-accent">
+      <md-tab id="ideasUnicorned">
+        <md-tab-label>Ideas Unicorned</md-tab-label>
+        <md-tab-body>
+          <div ng-if="loadingIdeasUnicorned" flex layout="column" layout-align="center center">
+            <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+          </div>
+          <md-list>
+            <idealistitem ng-repeat="idea in unicornedIdeas" idea="idea"></idealistitem>
+          </md-list>
+        </md-tab-body>
+      </md-tab>
+      <md-tab id="ideasCreated">
+        <md-tab-label>Ideas Created</md-tab-label>
+        <md-tab-body>
+          <div ng-if="loadingIdeasCreated" flex layout="column" layout-align="center center">
+            <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+          </div>
+          <md-list>
+            <idealistitem ng-repeat="idea in createdIdeas" idea="idea"></idealistitem>
+          </md-list>
+        </md-tab-body>
+    </md-tabs>
+  </md-card>
+
+</div>
