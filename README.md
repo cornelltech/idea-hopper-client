@@ -1,7 +1,5 @@
-# AngularJS REST Template
+# Unicornucopia
 
-Boilerplate code that pairs with the Django REST boilerplate code
+An idea repo tracker
 
-## Pairs with the following repos:
-1. [Django REST Boilerplate](https://github.com/AVatch/django-rest-boilerplate)
 
