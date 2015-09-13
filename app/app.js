@@ -28,8 +28,8 @@ angular.module('unicornucopia', [
 
 .constant('API_VERSION', '1')
 .constant('PREFIX', 'APP')
-// .constant('DOMAIN', 'http://localhost:8000')
-.constant('DOMAIN', 'http://unicornucopia-dev.elasticbeanstalk.com')
+.constant('DOMAIN', 'http://localhost:8000')
+// .constant('DOMAIN', 'http://unicornucopia-dev.elasticbeanstalk.com')
 
 .config(['$mdThemingProvider', function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
