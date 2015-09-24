@@ -5,8 +5,9 @@
       <md-card>
         <md-card-content style="padding:0px;">
           <md-list style="padding:0px;">
-            <md-subheader class="md-no-sticky" style="padding:0px;">Blessings</md-subheader>
-            <md-list-item>
+            
+            <md-subheader class="md-no-sticky" style="padding:0px;">Blessings</md-subheader ng-show="false">
+            <md-list-item ng-show="false">
               
               <md-select flex ng-model="focusedBlessing" aria-label="Blessing Selection" style="margin:0px;">
                 <md-option ng-repeat="blessing in blessings" 
@@ -16,8 +17,8 @@
               
             </md-list-item>
 
-            <md-subheader class="md-no-sticky" style="padding:0px;">Search {{ ideas.length }} ideas</md-subheader>
-            <md-list-item layout="row">
+            <md-subheader class="md-no-sticky" style="padding:0px;">Search {{ ideas.length }} ideas</md-subheader ng-show="false">
+            <md-list-item layout="row" ng-show="false">
               <div flex layout layout-sm="column">
                 <md-input-container style="width:100%; padding:0px;">
                     <label>Search for ideas in this blessing</label>

@@ -163,6 +163,17 @@ angular.module('unicornucopia.ideas.controllers', [])
       return deferred.promise;
     };
 
+    $scope.$parent.$parent.$watch('me', function(newValue, oldValue){
+       if(newValue != null){
+        console.log(newValue)
+        if(newValue.program == 'FC' || newValue.program == 'PH' || newValue.program == 'PD' || newValue.program == 'ST'){
+          console.log('disabled')
+          $scope.disabled = true;
+        }
+        
+       }
+    })
+
     $scope.searchForAccounts = function(q){
       var deferred = $q.defer();
       Account.queryAccounts(q)
@@ -198,7 +209,7 @@ angular.module('unicornucopia.ideas.controllers', [])
     };
 
     var init = function(){
-      var sync = syncAccount()
+      var sync = syncAccount();
     }; init();
 
 }])

@@ -35,7 +35,9 @@
          layout="row"
          layout-align="end center">
       <md-button class="md-raised"
-                 ng-click="createIdea()">Add Idea</md-button>
+                 ng-disabled="disabled"
+                 ng-click="createIdea()">Add Idea </md-button>
+                 {{ disabled }}
     </div>
 
   </md-card-content>
